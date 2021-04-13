@@ -1,8 +1,8 @@
 {
-  "name": "typescript-action",
+  "name": "create-ecr-repository-action",
   "version": "0.0.0",
   "private": true,
-  "description": "TypeScript template action",
+  "description": "Create Amazon ECR repository if not exist",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
@@ -11,18 +11,17 @@
     "lint": "eslint src/**/*.ts",
     "package": "ncc build --source-map --license licenses.txt",
     "test": "jest",
-    "all": "npm run build && npm run format && npm run lint && npm run package && npm test"
+    "all": "yarn build && yarn format && yarn lint && yarn package && yarn test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/int128/create-ecr-repository-action.git"
   },
   "keywords": [
     "actions",
-    "node",
-    "setup"
+    "aws"
   ],
-  "author": "",
+  "author": "int128",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.2.6"

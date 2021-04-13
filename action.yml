@@ -1,11 +1,10 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: create-ecr-repository-action
+description: Create Amazon ECR repository if not exist
+author: int128
 inputs:
-  milliseconds: # change this
+  repository:
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    description: repository name to create
 runs:
   using: 'node12'
   main: 'dist/index.js'
