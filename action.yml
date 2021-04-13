@@ -5,6 +5,9 @@ inputs:
   repository:
     required: true
     description: repository name to create
+  lifecycle-policy:
+    required: false
+    description: path to lifecycle policy file of the repository (optional)
 outputs:
   repository-uri:
     description: URI of the repository, i.e. ACCOUNT.dkr.ecr.REGION.amazonaws.com/NAME
