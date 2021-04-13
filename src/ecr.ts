@@ -1,5 +1,6 @@
 import * as core from '@actions/core'
 import aws from 'aws-sdk'
+import {promises as fs} from 'fs'
 
 export async function createRepositoryIfNotExist(name: string): Promise<aws.ECR.Repository> {
   const ecr = new aws.ECR()
@@ -30,4 +31,18 @@ export async function createRepositoryIfNotExist(name: string): Promise<aws.ECR.
 
     throw err
   }
+}
+
+export async function putLifecyclePolicy(name: string, path: string): Promise<void> {
+  const lifecyclePolicyText = await fs.readFile(path, {encoding: 'utf-8'})
+  core.debug(`putting the lifecycle policy ${path} to repository ${name}`)
+
+  const ecr = new aws.ECR()
+  await ecr
+    .putLifecyclePolicy({
+      repositoryName: name,
+      lifecyclePolicyText
+    })
+    .promise()
+  core.info(`successfully put lifecycle policy ${path} to repository ${name}`)
 }
