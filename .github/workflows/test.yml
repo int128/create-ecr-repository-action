@@ -8,11 +8,30 @@ on:
       - 'releases/*'
 
 jobs:
-  test: # make sure build/ci work properly
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - run: yarn
-      - run: yarn all
-      # check code generation
-      - run: git diff --exit-code
+      - run: yarn format
+      - run: yarn lint
+      - run: yarn test
+
+  update-generated-files:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+      - run: yarn
+      - run: yarn build
+      - run: yarn package
+      - run: |
+          if ! git diff --exit-code; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add .
+            git commit -m update-generated-files
+            git push origin ${{ github.head_ref }}
+          fi
