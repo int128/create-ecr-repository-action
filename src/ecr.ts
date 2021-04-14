@@ -13,7 +13,7 @@ export async function createRepositoryIfNotExist(name: string): Promise<aws.ECR.
       throw new Error(`unexpected response describe.repositories = ${describe.repositories}`)
     }
     const found = describe.repositories[0]
-    core.info(`repository ${found.repositoryUri} has been created`)
+    core.info(`repository ${found.repositoryUri} found`)
     return found
   } catch (err) {
     if (err.code === 'RepositoryNotFoundException') {
