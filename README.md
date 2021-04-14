@@ -16,6 +16,8 @@ jobs:
         id: ecr
         with:
           repository: hello-world
+          # (optional) you can put a lifecycle policy to the repository
+          lifecycle-policy: path/to/lifecycle-policy.json
       - run: docker build -t ${{ steps.ecr.outputs.repository-uri }}:latest .
       - run: docker push ${{ steps.ecr.outputs.repository-uri }}:latest
 ```
