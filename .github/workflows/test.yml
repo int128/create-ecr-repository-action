@@ -23,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: ${{ github.head_ref }}
       - run: yarn
       - run: yarn build
       - run: yarn package
