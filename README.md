@@ -1,9 +1,32 @@
-# create-ecr-repository-action
+# create-ecr-repository-action [![test](https://github.com/int128/create-ecr-repository-action/actions/workflows/test.yml/badge.svg)](https://github.com/int128/create-ecr-repository-action/actions/workflows/test.yml)
 
 This is a GitHub Action to create an Amazon ECR repository if it does not exist.
+It can put a lifecycle policy to the repository for cost saving.
 
 
 ## Getting Started
+
+To create a repository:
+
+```yaml
+jobs:
+  build:
+    steps:
+      - uses: int128/create-ecr-repository-action@main
+        with:
+          repository: hello-world
+```
+
+You can put a lifecycle policy:
+
+```yaml
+      - uses: int128/create-ecr-repository-action@main
+        with:
+          repository: hello-world
+          lifecycle-policy: config/lifecycle-policy.json
+```
+
+Here is a full example to build an image:
 
 ```yaml
 jobs:
@@ -16,8 +39,6 @@ jobs:
         id: ecr
         with:
           repository: hello-world
-          # (optional) you can put a lifecycle policy to the repository
-          lifecycle-policy: path/to/lifecycle-policy.json
       - run: docker build -t ${{ steps.ecr.outputs.repository-uri }}:latest .
       - run: docker push ${{ steps.ecr.outputs.repository-uri }}:latest
 ```
