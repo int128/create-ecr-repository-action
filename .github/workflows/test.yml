@@ -15,4 +15,4 @@ jobs:
       - run: yarn
       - run: yarn all
       # check code generation
-      - run: git diff
+      - run: git diff --exit-code
