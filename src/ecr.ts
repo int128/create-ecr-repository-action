@@ -33,16 +33,11 @@ export async function createRepositoryIfNotExist(name: string): Promise<aws.ECR.
   }
 }
 
-export async function putLifecyclePolicy(name: string, path: string): Promise<void> {
+export async function putLifecyclePolicy(repositoryName: string, path: string): Promise<void> {
   const lifecyclePolicyText = await fs.readFile(path, {encoding: 'utf-8'})
-  core.debug(`putting the lifecycle policy ${path} to repository ${name}`)
+  core.debug(`putting the lifecycle policy ${path} to repository ${repositoryName}`)
 
   const ecr = new aws.ECR()
-  await ecr
-    .putLifecyclePolicy({
-      repositoryName: name,
-      lifecyclePolicyText
-    })
-    .promise()
-  core.info(`successfully put lifecycle policy ${path} to repository ${name}`)
+  await ecr.putLifecyclePolicy({repositoryName, lifecyclePolicyText}).promise()
+  core.info(`successfully put lifecycle policy ${path} to repository ${repositoryName}`)
 }
