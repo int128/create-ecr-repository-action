@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-import {createRepositoryIfNotExist, putLifecyclePolicy} from './ecr'
+import { createRepositoryIfNotExist, putLifecyclePolicy } from './ecr'
 
 async function run(): Promise<void> {
   try {
