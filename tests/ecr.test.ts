@@ -1,13 +1,15 @@
 import aws from 'aws-sdk'
 import { createRepositoryIfNotExist } from '../src/ecr'
 
-const mockECR = {
-  describeRepositories: jest.fn(),
-  createRepository: jest.fn(),
+const ecrPromise = {
+  describeRepositories: jest.fn<Promise<aws.ECR.DescribeRepositoriesResponse>, []>(),
+  createRepository: jest.fn<Promise<aws.ECR.CreateRepositoryResponse>, []>(),
 }
-jest.mock('aws-sdk', () => ({
-  ECR: jest.fn(() => mockECR),
-}))
+const ecr = {
+  describeRepositories: jest.fn(() => ({ promise: ecrPromise.describeRepositories })),
+  createRepository: jest.fn(() => ({ promise: ecrPromise.createRepository })),
+}
+jest.mock('aws-sdk', () => ({ ECR: jest.fn(() => ecr) }))
 
 describe('Create an ECR repository if not exist', () => {
   beforeEach(() => {
@@ -15,69 +17,64 @@ describe('Create an ECR repository if not exist', () => {
   })
 
   test('returns the existing repository', async () => {
-    mockECR.describeRepositories.mockReturnValue({
-      promise: () =>
-        Promise.resolve<aws.ECR.DescribeRepositoriesResponse>({
-          repositories: [
-            {
-              repositoryName: 'foobar',
-              repositoryUri: '123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar',
-            },
-          ],
-        }),
+    ecrPromise.describeRepositories.mockResolvedValue({
+      repositories: [
+        {
+          repositoryName: 'foobar',
+          repositoryUri: '123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar',
+        },
+      ],
     })
 
     const repository = await createRepositoryIfNotExist('foobar')
     expect(repository.repositoryName).toEqual('foobar')
     expect(repository.repositoryUri).toEqual('123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar')
 
-    expect(mockECR.describeRepositories).toHaveBeenCalledWith<[aws.ECR.DescribeRepositoriesRequest]>({
-      repositoryNames: ['foobar'],
-    })
-    expect(mockECR.createRepository).not.toHaveBeenCalled()
+    expect(ecr.describeRepositories).toHaveBeenCalledWith({ repositoryNames: ['foobar'] })
+    expect(ecr.createRepository).not.toHaveBeenCalled()
   })
 
   test('creates a repository', async () => {
-    mockECR.describeRepositories.mockReturnValue({
-      promise: () => Promise.reject({ code: 'RepositoryNotFoundException' }),
+    ecrPromise.describeRepositories.mockRejectedValue({
+      code: 'RepositoryNotFoundException',
     })
-    mockECR.createRepository.mockReturnValue({
-      promise: () =>
-        Promise.resolve<aws.ECR.CreateRepositoryResponse>({
-          repository: {
-            repositoryName: 'foobar',
-            repositoryUri: '123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar',
-          },
-        }),
+    ecrPromise.createRepository.mockResolvedValue({
+      repository: {
+        repositoryName: 'foobar',
+        repositoryUri: '123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar',
+      },
     })
 
     const repository = await createRepositoryIfNotExist('foobar')
     expect(repository.repositoryName).toEqual('foobar')
     expect(repository.repositoryUri).toEqual('123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar')
 
-    expect(mockECR.describeRepositories).toHaveBeenCalledWith<[aws.ECR.DescribeRepositoriesRequest]>({
-      repositoryNames: ['foobar'],
-    })
-    expect(mockECR.createRepository).toHaveBeenCalledWith<[aws.ECR.CreateRepositoryRequest]>({
-      repositoryName: 'foobar',
-    })
+    expect(ecr.describeRepositories).toHaveBeenCalledWith({ repositoryNames: ['foobar'] })
+    expect(ecr.createRepository).toHaveBeenCalledWith({ repositoryName: 'foobar' })
   })
 
   test('general error occurred on describe', async () => {
-    mockECR.describeRepositories.mockReturnValue({
-      promise: () => Promise.reject({ code: 'ConfigError' }),
+    ecrPromise.describeRepositories.mockRejectedValue({
+      code: 'ConfigError',
     })
+
     await expect(createRepositoryIfNotExist('foobar')).rejects.toEqual({ code: 'ConfigError' })
-    expect(mockECR.createRepository).not.toHaveBeenCalled()
+
+    expect(ecr.describeRepositories).toHaveBeenCalledWith({ repositoryNames: ['foobar'] })
+    expect(ecr.createRepository).not.toHaveBeenCalled()
   })
 
   test('general error occurred on create', async () => {
-    mockECR.describeRepositories.mockReturnValue({
-      promise: () => Promise.reject({ code: 'RepositoryNotFoundException' }),
+    ecrPromise.describeRepositories.mockRejectedValue({
+      code: 'RepositoryNotFoundException',
     })
-    mockECR.createRepository.mockReturnValue({
-      promise: () => Promise.reject({ code: 'ConfigError' }),
+    ecrPromise.createRepository.mockRejectedValue({
+      code: 'ConfigError',
     })
+
     await expect(createRepositoryIfNotExist('foobar')).rejects.toEqual({ code: 'ConfigError' })
+
+    expect(ecr.describeRepositories).toHaveBeenCalledWith({ repositoryNames: ['foobar'] })
+    expect(ecr.createRepository).toHaveBeenCalledWith({ repositoryName: 'foobar' })
   })
 })
