@@ -1,17 +1,1 @@
-{
-  "rules": [
-    {
-      "rulePriority": 1,
-      "description": "https://docs.aws.amazon.com/AmazonECR/latest/userguide/lifecycle_policy_examples.html",
-      "selection": {
-        "tagStatus": "untagged",
-        "countType": "sinceImagePushed",
-        "countUnit": "days",
-        "countNumber": 14
-      },
-      "action": {
-        "type": "expire"
-      }
-    }
-  ]
-}
+{ "rules": [{ "description": "dummy" }] }
