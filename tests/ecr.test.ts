@@ -1,21 +1,19 @@
 import aws from 'aws-sdk'
-import { createRepositoryIfNotExist } from '../src/ecr'
+import { createRepositoryIfNotExist, putLifecyclePolicy } from '../src/ecr'
 
 const ecrPromise = {
   describeRepositories: jest.fn<Promise<aws.ECR.DescribeRepositoriesResponse>, []>(),
   createRepository: jest.fn<Promise<aws.ECR.CreateRepositoryResponse>, []>(),
+  putLifecyclePolicy: jest.fn<Promise<aws.ECR.PutLifecyclePolicyResponse>, []>(),
 }
 const ecr = {
   describeRepositories: jest.fn(() => ({ promise: ecrPromise.describeRepositories })),
   createRepository: jest.fn(() => ({ promise: ecrPromise.createRepository })),
+  putLifecyclePolicy: jest.fn(() => ({ promise: ecrPromise.putLifecyclePolicy })),
 }
 jest.mock('aws-sdk', () => ({ ECR: jest.fn(() => ecr) }))
 
 describe('Create an ECR repository if not exist', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
-
   test('returns the existing repository', async () => {
     ecrPromise.describeRepositories.mockResolvedValue({
       repositories: [
@@ -76,5 +74,24 @@ describe('Create an ECR repository if not exist', () => {
 
     expect(ecr.describeRepositories).toHaveBeenCalledWith({ repositoryNames: ['foobar'] })
     expect(ecr.createRepository).toHaveBeenCalledWith({ repositoryName: 'foobar' })
+  })
+})
+
+describe('Put a lifecycle policy', () => {
+  test('success', async () => {
+    ecrPromise.putLifecyclePolicy.mockResolvedValue({
+      repositoryName: 'foobar',
+    })
+
+    await putLifecyclePolicy('foobar', `${__dirname}/fixtures/lifecycle-policy.json`)
+
+    expect(ecr.putLifecyclePolicy).toHaveBeenCalledWith({
+      repositoryName: 'foobar',
+      lifecyclePolicyText: `{ "rules": [{ "description": "dummy" }] }`,
+    })
+  })
+
+  test('file not exist', async () => {
+    await expect(putLifecyclePolicy('foobar', 'wrong-path')).rejects.toThrowError()
   })
 })
