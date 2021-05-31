@@ -9,6 +9,7 @@
     },
     {
       "matchPackageNames": ["jest", "ts-jest"],
+      "matchPackagePrefixes": ["jest-"],
       "groupName": "jest"
     }
   ]
