@@ -19,6 +19,9 @@ jobs:
 
 If the repository exists, this action does nothing.
 
+
+### Put a lifecycle policy
+
 To create a repository with a lifecycle policy:
 
 ```yaml
@@ -27,6 +30,11 @@ To create a repository with a lifecycle policy:
           repository: hello-world
           lifecycle-policy: config/lifecycle-policy.json
 ```
+
+If the repository exists, this action just puts the lifecycle policy.
+
+
+### Full example
 
 Here is a full example to build an image and put it into an ECR repository:
 
@@ -45,8 +53,20 @@ jobs:
       - run: docker push ${{ steps.ecr.outputs.repository-uri }}:latest
 ```
 
-
-## Versioning
-
 Use a release tag such as `v1`.
 Do not use `main` branch because it does not contain `dist` files.
+
+
+## Inputs
+
+| Name | Required | Default | Description
+|------|----------|---------|------------
+| `repository` | `true` | - | Repository name to create
+| `lifecycle-policy` | `false` | - | Path to a file of lifecycle policy for the repository
+
+
+## Outputs
+
+| Name | Description
+|------|------------
+| `repository-uri` | URI of the repository (in form of `ACCOUNT.dkr.ecr.REGION.amazonaws.com/NAME`)
