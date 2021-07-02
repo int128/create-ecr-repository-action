@@ -2,6 +2,10 @@ name: create-ecr-repository-action
 description: Create Amazon ECR repository if not exist
 author: int128
 inputs:
+  public:
+    required: true
+    description: set true to create into ECR Public registry
+    default: 'false'
   repository:
     required: true
     description: repository name to create

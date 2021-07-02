@@ -25,6 +25,7 @@ test('create a repository', async () => {
   await run({
     repository: 'foo/bar',
     lifecyclePolicy: '',
+    public: false,
   })
 })
 
@@ -43,5 +44,6 @@ test('create a repository with a lifecycle policy', async () => {
   await run({
     repository: 'foo/bar',
     lifecyclePolicy: `${__dirname}/fixtures/lifecycle-policy.json`,
+    public: false,
   })
 })
