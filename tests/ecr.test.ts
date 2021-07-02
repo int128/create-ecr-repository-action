@@ -1,5 +1,5 @@
 import aws from 'aws-sdk'
-import { createRepositoryIfNotExist, putLifecyclePolicy } from '../src/ecr'
+import { runForECR } from '../src/ecr'
 
 const ecrPromise = {
   describeRepositories: jest.fn<Promise<aws.ECR.DescribeRepositoriesResponse>, []>(),
@@ -24,8 +24,7 @@ describe('Create an ECR repository if not exist', () => {
       ],
     })
 
-    const repository = await createRepositoryIfNotExist('foobar')
-    expect(repository.repositoryName).toEqual('foobar')
+    const repository = await runForECR({ repository: 'foobar' })
     expect(repository.repositoryUri).toEqual('123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar')
 
     expect(ecr.describeRepositories).toHaveBeenCalledWith({ repositoryNames: ['foobar'] })
@@ -43,8 +42,7 @@ describe('Create an ECR repository if not exist', () => {
       },
     })
 
-    const repository = await createRepositoryIfNotExist('foobar')
-    expect(repository.repositoryName).toEqual('foobar')
+    const repository = await runForECR({ repository: 'foobar' })
     expect(repository.repositoryUri).toEqual('123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar')
 
     expect(ecr.describeRepositories).toHaveBeenCalledWith({ repositoryNames: ['foobar'] })
@@ -56,7 +54,7 @@ describe('Create an ECR repository if not exist', () => {
       code: 'ConfigError',
     })
 
-    await expect(createRepositoryIfNotExist('foobar')).rejects.toEqual({ code: 'ConfigError' })
+    await expect(runForECR({ repository: 'foobar' })).rejects.toEqual({ code: 'ConfigError' })
 
     expect(ecr.describeRepositories).toHaveBeenCalledWith({ repositoryNames: ['foobar'] })
     expect(ecr.createRepository).not.toHaveBeenCalled()
@@ -70,7 +68,7 @@ describe('Create an ECR repository if not exist', () => {
       code: 'ConfigError',
     })
 
-    await expect(createRepositoryIfNotExist('foobar')).rejects.toEqual({ code: 'ConfigError' })
+    await expect(runForECR({ repository: 'foobar' })).rejects.toEqual({ code: 'ConfigError' })
 
     expect(ecr.describeRepositories).toHaveBeenCalledWith({ repositoryNames: ['foobar'] })
     expect(ecr.createRepository).toHaveBeenCalledWith({ repositoryName: 'foobar' })
@@ -79,11 +77,19 @@ describe('Create an ECR repository if not exist', () => {
 
 describe('Put a lifecycle policy', () => {
   test('success', async () => {
+    ecrPromise.describeRepositories.mockResolvedValue({
+      repositories: [
+        {
+          repositoryName: 'foobar',
+          repositoryUri: '123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar',
+        },
+      ],
+    })
     ecrPromise.putLifecyclePolicy.mockResolvedValue({
       repositoryName: 'foobar',
     })
 
-    await putLifecyclePolicy('foobar', `${__dirname}/fixtures/lifecycle-policy.json`)
+    await runForECR({ repository: 'foobar', lifecyclePolicy: `${__dirname}/fixtures/lifecycle-policy.json` })
 
     expect(ecr.putLifecyclePolicy).toHaveBeenCalledWith({
       repositoryName: 'foobar',
@@ -92,6 +98,15 @@ describe('Put a lifecycle policy', () => {
   })
 
   test('file not exist', async () => {
-    await expect(putLifecyclePolicy('foobar', 'wrong-path')).rejects.toThrowError()
+    ecrPromise.describeRepositories.mockResolvedValue({
+      repositories: [
+        {
+          repositoryName: 'foobar',
+          repositoryUri: '123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar',
+        },
+      ],
+    })
+
+    await expect(runForECR({ repository: 'foobar', lifecyclePolicy: 'wrong-path' })).rejects.toThrowError()
   })
 })
