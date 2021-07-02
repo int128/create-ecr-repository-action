@@ -2,7 +2,37 @@ import * as core from '@actions/core'
 import aws from 'aws-sdk'
 import { promises as fs } from 'fs'
 
-export async function createRepositoryIfNotExist(name: string): Promise<aws.ECR.Repository> {
+type Inputs = {
+  repository: string
+  lifecyclePolicy?: string
+}
+
+type Outputs = {
+  repositoryUri: string
+}
+
+export const runForECR = async (inputs: Inputs): Promise<Outputs> => {
+  const repository = await core.group(
+    `Create repository ${inputs.repository} if not exist`,
+    async () => await createRepositoryIfNotExist(inputs.repository)
+  )
+  if (repository.repositoryUri === undefined) {
+    throw new Error('unexpected response: repositoryUri === undefined')
+  }
+
+  const lifecyclePolicy = inputs.lifecyclePolicy
+  if (lifecyclePolicy !== undefined) {
+    await core.group(
+      `Put the lifecycle policy to repository ${repository.repositoryName}`,
+      async () => await putLifecyclePolicy(inputs.repository, lifecyclePolicy)
+    )
+  }
+  return {
+    repositoryUri: repository.repositoryUri,
+  }
+}
+
+const createRepositoryIfNotExist = async (name: string): Promise<aws.ECR.Repository> => {
   const ecr = new aws.ECR()
   try {
     const describe = await ecr.describeRepositories({ repositoryNames: [name] }).promise()
@@ -29,7 +59,7 @@ export async function createRepositoryIfNotExist(name: string): Promise<aws.ECR.
   }
 }
 
-export async function putLifecyclePolicy(repositoryName: string, path: string): Promise<void> {
+const putLifecyclePolicy = async (repositoryName: string, path: string): Promise<void> => {
   const lifecyclePolicyText = await fs.readFile(path, { encoding: 'utf-8' })
   core.debug(`putting the lifecycle policy ${path} to repository ${repositoryName}`)
 
