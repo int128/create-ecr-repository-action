@@ -23,7 +23,9 @@ export const runForECRPublic = async (inputs: Inputs): Promise<Outputs> => {
 }
 
 const createRepositoryIfNotExist = async (name: string): Promise<aws.ECRPUBLIC.Repository> => {
-  const ecr = new aws.ECRPUBLIC()
+  // ECR Public API is supported only in us-east-1
+  // https://docs.aws.amazon.com/general/latest/gr/ecr-public.html
+  const ecr = new aws.ECRPUBLIC({ region: 'us-east-1' })
   try {
     const describe = await ecr.describeRepositories({ repositoryNames: [name] }).promise()
     if (describe.repositories === undefined) {
