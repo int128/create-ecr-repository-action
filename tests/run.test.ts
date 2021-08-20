@@ -3,7 +3,7 @@ import * as core from '@actions/core'
 import { run } from '../src/run'
 
 jest.mock('@actions/core', () => {
-  const original = jest.requireActual('@actions/core')
+  const original: typeof core = jest.requireActual('@actions/core')
   return {
     ...original,
     setOutput: jest.fn().mockImplementation(original.setOutput),
