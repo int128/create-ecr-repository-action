@@ -32,16 +32,22 @@ const createRepositoryIfNotExist = async (name: string): Promise<aws.ECRPUBLIC.R
       throw new Error(`unexpected response describe.repositories was undefined`)
     }
     if (describe.repositories.length !== 1) {
-      throw new Error(`unexpected response describe.repositories = ${describe.repositories}`)
+      throw new Error(`unexpected response describe.repositories = ${JSON.stringify(describe.repositories)}`)
     }
     const found = describe.repositories[0]
+    if (found.repositoryUri === undefined) {
+      throw new Error(`unexpected response repositoryUri was undefined`)
+    }
     core.info(`repository ${found.repositoryUri} found`)
     return found
   } catch (error) {
-    if (error.code === 'RepositoryNotFoundException') {
+    if (isRepositoryNotFoundException(error)) {
       const create = await ecr.createRepository({ repositoryName: name }).promise()
       if (create.repository === undefined) {
         throw new Error(`unexpected response create.repository was undefined`)
+      }
+      if (create.repository.repositoryUri === undefined) {
+        throw new Error(`unexpected response create.repository.repositoryUri was undefined`)
       }
       core.info(`repository ${create.repository.repositoryUri} has been created`)
       return create.repository
@@ -49,6 +55,14 @@ const createRepositoryIfNotExist = async (name: string): Promise<aws.ECRPUBLIC.R
 
     throw error
   }
+}
+
+const isRepositoryNotFoundException = (error: unknown): boolean => {
+  if (typeof error === 'object' && error !== null && 'code' in error) {
+    const e = error as { code: unknown }
+    return e.code === 'RepositoryNotFoundException'
+  }
+  return false
 }
 
 // ECR Public does not support the lifecycle policy
