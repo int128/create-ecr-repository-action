@@ -25,7 +25,7 @@
   "license": "MIT",
   "dependencies": {
     "@actions/core": "1.5.0",
-    "aws-sdk": "2.978.0"
+    "aws-sdk": "2.979.0"
   },
   "devDependencies": {
     "@types/aws-sdk": "2.7.0",
