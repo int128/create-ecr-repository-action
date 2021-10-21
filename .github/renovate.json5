@@ -14,7 +14,7 @@
     },
     {
       "matchPackageNames": ["eslint"],
-      "matchPackagePrefixes": ["eslint-", "typescript-eslint-"],
+      "matchPackagePrefixes": ["eslint-", "@typescript-eslint/"],
       "groupName": "eslint"
     }
   ]
