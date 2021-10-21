@@ -13,8 +13,8 @@
       "groupName": "jest"
     },
     {
-      "matchPackageNames": ["eslint", "typescript-eslint"],
-      "matchPackagePrefixes": ["eslint-"],
+      "matchPackageNames": ["eslint"],
+      "matchPackagePrefixes": ["eslint-", "typescript-eslint-"],
       "groupName": "eslint"
     }
   ]
