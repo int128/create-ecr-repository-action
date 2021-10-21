@@ -11,6 +11,11 @@
       "matchPackageNames": ["jest", "ts-jest"],
       "matchPackagePrefixes": ["jest-"],
       "groupName": "jest"
+    },
+    {
+      "matchPackageNames": ["eslint", "typescript-eslint"],
+      "matchPackagePrefixes": ["eslint-"],
+      "groupName": "eslint"
     }
   ]
 }
