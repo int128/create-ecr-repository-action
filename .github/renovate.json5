@@ -1,21 +1,6 @@
 {
   "extends": [
-    "config:base"
-  ],
-  "packageRules": [
-    {
-      "matchUpdateTypes": ["minor", "patch"],
-      "automerge": true
-    },
-    {
-      "matchPackageNames": ["jest", "ts-jest"],
-      "matchPackagePrefixes": ["jest-"],
-      "groupName": "jest"
-    },
-    {
-      "matchPackageNames": ["eslint"],
-      "matchPackagePrefixes": ["eslint-", "@typescript-eslint/"],
-      "groupName": "eslint"
-    }
+    "config:base",
+    "github>int128/typescript-action-renovate-config"
   ]
 }
