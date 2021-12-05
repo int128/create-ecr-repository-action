@@ -74,11 +74,11 @@ Do not use `main` branch because it does not contain `dist` files.
 
 ## Inputs
 
-| Name | Description
-|------|-------------
-| `public`            | Set `true` to create into ECR Public registry (default to `false`)
-| `repository`        | Repository name to create
-| `lifecycle-policy`  | Path to a file of lifecycle policy for the repository (optional)
+| Name | Default | Description
+|------|---------|------------
+| `public` | `false` | Set `true` to create into ECR Public registry
+| `repository` | (required) | Repository name to create
+| `lifecycle-policy` | - | Path to a file of lifecycle policy for the repository
 
 
 ## Outputs
