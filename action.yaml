@@ -1,6 +1,7 @@
 name: create-ecr-repository-action
 description: Create Amazon ECR repository if not exist
 author: int128
+
 inputs:
   public:
     required: true
@@ -12,9 +13,11 @@ inputs:
   lifecycle-policy:
     required: false
     description: path to lifecycle policy file of the repository (optional)
+
 outputs:
   repository-uri:
     description: URI of the repository, i.e. ACCOUNT.dkr.ecr.REGION.amazonaws.com/NAME
+
 runs:
   using: 'node12'
   main: 'dist/index.js'
