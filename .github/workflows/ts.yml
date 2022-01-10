@@ -7,6 +7,7 @@ on:
       - src/**
       - test/**
       - '*.json'
+      - action.yaml
       - .github/workflows/ts.yaml
   push:
     branches: [main]
@@ -14,6 +15,7 @@ on:
       - src/**
       - test/**
       - '*.json'
+      - action.yaml
       - .github/workflows/ts.yaml
 
 jobs:
