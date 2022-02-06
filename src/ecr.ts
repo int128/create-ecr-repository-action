@@ -72,11 +72,9 @@ const createRepositoryIfNotExist = async (client: ECRClient, name: string): Prom
   }
 }
 
-// FIXME: error handling in v3
 const isRepositoryNotFoundException = (error: unknown): boolean => {
-  if (typeof error === 'object' && error !== null && 'code' in error) {
-    const e = error as { code: unknown }
-    return e.code === 'RepositoryNotFoundException'
+  if (error instanceof Error) {
+    return error.name === 'RepositoryNotFoundException'
   }
   return false
 }

@@ -1,19 +1,12 @@
-import aws from 'aws-sdk'
+import { mockClient } from 'aws-sdk-client-mock'
+import { CreateRepositoryCommand, DescribeRepositoriesCommand, ECRPUBLICClient } from '@aws-sdk/client-ecr-public'
 import { runForECRPublic } from '../src/ecr_public'
 
-const ecrPromise = {
-  describeRepositories: jest.fn<Promise<aws.ECRPUBLIC.DescribeRepositoriesResponse>, []>(),
-  createRepository: jest.fn<Promise<aws.ECRPUBLIC.CreateRepositoryResponse>, []>(),
-}
-const ecr = {
-  describeRepositories: jest.fn(() => ({ promise: ecrPromise.describeRepositories })),
-  createRepository: jest.fn(() => ({ promise: ecrPromise.createRepository })),
-}
-jest.mock('aws-sdk', () => ({ ECRPUBLIC: jest.fn(() => ecr) }))
+const ecrMock = mockClient(ECRPUBLICClient)
 
 describe('Create an ECR repository if not exist', () => {
   test('returns the existing repository', async () => {
-    ecrPromise.describeRepositories.mockResolvedValue({
+    ecrMock.on(DescribeRepositoriesCommand, { repositoryNames: ['foobar'] }).resolves({
       repositories: [
         {
           repositoryName: 'foobar',
@@ -24,16 +17,13 @@ describe('Create an ECR repository if not exist', () => {
 
     const repository = await runForECRPublic({ repository: 'foobar' })
     expect(repository.repositoryUri).toEqual('public.ecr.aws/12345678/foobar')
-
-    expect(ecr.describeRepositories).toHaveBeenCalledWith({ repositoryNames: ['foobar'] })
-    expect(ecr.createRepository).not.toHaveBeenCalled()
   })
 
   test('creates a repository', async () => {
-    ecrPromise.describeRepositories.mockRejectedValue({
-      code: 'RepositoryNotFoundException',
-    })
-    ecrPromise.createRepository.mockResolvedValue({
+    ecrMock
+      .on(DescribeRepositoriesCommand, { repositoryNames: ['foobar'] })
+      .rejects({ name: 'RepositoryNotFoundException' })
+    ecrMock.on(CreateRepositoryCommand, { repositoryName: 'foobar' }).resolves({
       repository: {
         repositoryName: 'foobar',
         repositoryUri: 'public.ecr.aws/12345678/foobar',
@@ -42,33 +32,30 @@ describe('Create an ECR repository if not exist', () => {
 
     const repository = await runForECRPublic({ repository: 'foobar' })
     expect(repository.repositoryUri).toEqual('public.ecr.aws/12345678/foobar')
-
-    expect(ecr.describeRepositories).toHaveBeenCalledWith({ repositoryNames: ['foobar'] })
-    expect(ecr.createRepository).toHaveBeenCalledWith({ repositoryName: 'foobar' })
   })
 
   test('general error occurred on describe', async () => {
-    ecrPromise.describeRepositories.mockRejectedValue({
-      code: 'ConfigError',
+    ecrMock
+      .on(DescribeRepositoriesCommand, { repositoryNames: ['foobar'] })
+      .rejects({ name: 'ConfigError', message: 'ConfigError' })
+
+    await expect(runForECRPublic({ repository: 'foobar' })).rejects.toThrowError({
+      name: 'ConfigError',
+      message: 'ConfigError',
     })
-
-    await expect(runForECRPublic({ repository: 'foobar' })).rejects.toEqual({ code: 'ConfigError' })
-
-    expect(ecr.describeRepositories).toHaveBeenCalledWith({ repositoryNames: ['foobar'] })
-    expect(ecr.createRepository).not.toHaveBeenCalled()
   })
 
   test('general error occurred on create', async () => {
-    ecrPromise.describeRepositories.mockRejectedValue({
-      code: 'RepositoryNotFoundException',
-    })
-    ecrPromise.createRepository.mockRejectedValue({
-      code: 'ConfigError',
-    })
+    ecrMock
+      .on(DescribeRepositoriesCommand, { repositoryNames: ['foobar'] })
+      .rejects({ name: 'RepositoryNotFoundException' })
+    ecrMock
+      .on(CreateRepositoryCommand, { repositoryName: 'foobar' })
+      .rejects({ name: 'ConfigError', message: 'ConfigError' })
 
-    await expect(runForECRPublic({ repository: 'foobar' })).rejects.toEqual({ code: 'ConfigError' })
-
-    expect(ecr.describeRepositories).toHaveBeenCalledWith({ repositoryNames: ['foobar'] })
-    expect(ecr.createRepository).toHaveBeenCalledWith({ repositoryName: 'foobar' })
+    await expect(runForECRPublic({ repository: 'foobar' })).rejects.toThrowError({
+      name: 'ConfigError',
+      message: 'ConfigError',
+    })
   })
 })

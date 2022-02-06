@@ -1,21 +1,17 @@
-import aws from 'aws-sdk'
+import { mockClient } from 'aws-sdk-client-mock'
+import {
+  CreateRepositoryCommand,
+  DescribeRepositoriesCommand,
+  ECRClient,
+  PutLifecyclePolicyCommand,
+} from '@aws-sdk/client-ecr'
 import { runForECR } from '../src/ecr'
 
-const ecrPromise = {
-  describeRepositories: jest.fn<Promise<aws.ECR.DescribeRepositoriesResponse>, []>(),
-  createRepository: jest.fn<Promise<aws.ECR.CreateRepositoryResponse>, []>(),
-  putLifecyclePolicy: jest.fn<Promise<aws.ECR.PutLifecyclePolicyResponse>, []>(),
-}
-const ecr = {
-  describeRepositories: jest.fn(() => ({ promise: ecrPromise.describeRepositories })),
-  createRepository: jest.fn(() => ({ promise: ecrPromise.createRepository })),
-  putLifecyclePolicy: jest.fn(() => ({ promise: ecrPromise.putLifecyclePolicy })),
-}
-jest.mock('aws-sdk', () => ({ ECR: jest.fn(() => ecr) }))
+const ecrMock = mockClient(ECRClient)
 
 describe('Create an ECR repository if not exist', () => {
   test('returns the existing repository', async () => {
-    ecrPromise.describeRepositories.mockResolvedValue({
+    ecrMock.on(DescribeRepositoriesCommand, { repositoryNames: ['foobar'] }).resolves({
       repositories: [
         {
           repositoryName: 'foobar',
@@ -26,16 +22,13 @@ describe('Create an ECR repository if not exist', () => {
 
     const repository = await runForECR({ repository: 'foobar' })
     expect(repository.repositoryUri).toEqual('123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar')
-
-    expect(ecr.describeRepositories).toHaveBeenCalledWith({ repositoryNames: ['foobar'] })
-    expect(ecr.createRepository).not.toHaveBeenCalled()
   })
 
   test('creates a repository', async () => {
-    ecrPromise.describeRepositories.mockRejectedValue({
-      code: 'RepositoryNotFoundException',
-    })
-    ecrPromise.createRepository.mockResolvedValue({
+    ecrMock
+      .on(DescribeRepositoriesCommand, { repositoryNames: ['foobar'] })
+      .rejects({ name: 'RepositoryNotFoundException' })
+    ecrMock.on(CreateRepositoryCommand, { repositoryName: 'foobar' }).resolves({
       repository: {
         repositoryName: 'foobar',
         repositoryUri: '123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar',
@@ -44,40 +37,27 @@ describe('Create an ECR repository if not exist', () => {
 
     const repository = await runForECR({ repository: 'foobar' })
     expect(repository.repositoryUri).toEqual('123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar')
-
-    expect(ecr.describeRepositories).toHaveBeenCalledWith({ repositoryNames: ['foobar'] })
-    expect(ecr.createRepository).toHaveBeenCalledWith({ repositoryName: 'foobar' })
   })
 
   test('general error occurred on describe', async () => {
-    ecrPromise.describeRepositories.mockRejectedValue({
-      code: 'ConfigError',
-    })
+    ecrMock.on(DescribeRepositoriesCommand).rejects({ name: 'ConfigError' })
 
-    await expect(runForECR({ repository: 'foobar' })).rejects.toEqual({ code: 'ConfigError' })
-
-    expect(ecr.describeRepositories).toHaveBeenCalledWith({ repositoryNames: ['foobar'] })
-    expect(ecr.createRepository).not.toHaveBeenCalled()
+    await expect(runForECR({ repository: 'foobar' })).rejects.toThrowError()
   })
 
   test('general error occurred on create', async () => {
-    ecrPromise.describeRepositories.mockRejectedValue({
-      code: 'RepositoryNotFoundException',
-    })
-    ecrPromise.createRepository.mockRejectedValue({
-      code: 'ConfigError',
-    })
+    ecrMock
+      .on(DescribeRepositoriesCommand, { repositoryNames: ['foobar'] })
+      .rejects({ name: 'RepositoryNotFoundException' })
+    ecrMock.on(CreateRepositoryCommand, { repositoryName: 'foobar' }).rejects({ name: 'ConfigError' })
 
-    await expect(runForECR({ repository: 'foobar' })).rejects.toEqual({ code: 'ConfigError' })
-
-    expect(ecr.describeRepositories).toHaveBeenCalledWith({ repositoryNames: ['foobar'] })
-    expect(ecr.createRepository).toHaveBeenCalledWith({ repositoryName: 'foobar' })
+    await expect(runForECR({ repository: 'foobar' })).rejects.toThrowError()
   })
 })
 
 describe('Put a lifecycle policy', () => {
   test('success', async () => {
-    ecrPromise.describeRepositories.mockResolvedValue({
+    ecrMock.on(DescribeRepositoriesCommand).resolves({
       repositories: [
         {
           repositoryName: 'foobar',
@@ -85,20 +65,20 @@ describe('Put a lifecycle policy', () => {
         },
       ],
     })
-    ecrPromise.putLifecyclePolicy.mockResolvedValue({
-      repositoryName: 'foobar',
-    })
+    ecrMock
+      .on(PutLifecyclePolicyCommand, {
+        repositoryName: 'foobar',
+        lifecyclePolicyText: `{ "rules": [{ "description": "dummy" }] }`,
+      })
+      .resolves({
+        repositoryName: 'foobar',
+      })
 
     await runForECR({ repository: 'foobar', lifecyclePolicy: `${__dirname}/fixtures/lifecycle-policy.json` })
-
-    expect(ecr.putLifecyclePolicy).toHaveBeenCalledWith({
-      repositoryName: 'foobar',
-      lifecyclePolicyText: `{ "rules": [{ "description": "dummy" }] }`,
-    })
   })
 
   test('file not exist', async () => {
-    ecrPromise.describeRepositories.mockResolvedValue({
+    ecrMock.on(DescribeRepositoriesCommand).resolves({
       repositories: [
         {
           repositoryName: 'foobar',
