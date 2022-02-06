@@ -1,5 +1,11 @@
 import * as core from '@actions/core'
-import aws from 'aws-sdk'
+import {
+  ECRClient,
+  DescribeRepositoriesCommand,
+  CreateRepositoryCommand,
+  PutLifecyclePolicyCommand,
+  Repository,
+} from '@aws-sdk/client-ecr'
 import { promises as fs } from 'fs'
 
 type Inputs = {
@@ -12,9 +18,11 @@ type Outputs = {
 }
 
 export const runForECR = async (inputs: Inputs): Promise<Outputs> => {
+  const client = new ECRClient({})
+
   const repository = await core.group(
     `Create repository ${inputs.repository} if not exist`,
-    async () => await createRepositoryIfNotExist(inputs.repository)
+    async () => await createRepositoryIfNotExist(client, inputs.repository)
   )
   if (repository.repositoryUri === undefined) {
     throw new Error('unexpected response: repositoryUri === undefined')
@@ -24,7 +32,7 @@ export const runForECR = async (inputs: Inputs): Promise<Outputs> => {
   if (lifecyclePolicy !== undefined) {
     await core.group(
       `Put the lifecycle policy to repository ${inputs.repository}`,
-      async () => await putLifecyclePolicy(inputs.repository, lifecyclePolicy)
+      async () => await putLifecyclePolicy(client, inputs.repository, lifecyclePolicy)
     )
   }
   return {
@@ -32,10 +40,9 @@ export const runForECR = async (inputs: Inputs): Promise<Outputs> => {
   }
 }
 
-const createRepositoryIfNotExist = async (name: string): Promise<aws.ECR.Repository> => {
-  const ecr = new aws.ECR()
+const createRepositoryIfNotExist = async (client: ECRClient, name: string): Promise<Repository> => {
   try {
-    const describe = await ecr.describeRepositories({ repositoryNames: [name] }).promise()
+    const describe = await client.send(new DescribeRepositoriesCommand({ repositoryNames: [name] }))
     if (describe.repositories === undefined) {
       throw new Error(`unexpected response describe.repositories was undefined`)
     }
@@ -50,7 +57,7 @@ const createRepositoryIfNotExist = async (name: string): Promise<aws.ECR.Reposit
     return found
   } catch (error) {
     if (isRepositoryNotFoundException(error)) {
-      const create = await ecr.createRepository({ repositoryName: name }).promise()
+      const create = await client.send(new CreateRepositoryCommand({ repositoryName: name }))
       if (create.repository === undefined) {
         throw new Error(`unexpected response create.repository was undefined`)
       }
@@ -65,6 +72,7 @@ const createRepositoryIfNotExist = async (name: string): Promise<aws.ECR.Reposit
   }
 }
 
+// FIXME: error handling in v3
 const isRepositoryNotFoundException = (error: unknown): boolean => {
   if (typeof error === 'object' && error !== null && 'code' in error) {
     const e = error as { code: unknown }
@@ -73,11 +81,10 @@ const isRepositoryNotFoundException = (error: unknown): boolean => {
   return false
 }
 
-const putLifecyclePolicy = async (repositoryName: string, path: string): Promise<void> => {
+const putLifecyclePolicy = async (client: ECRClient, repositoryName: string, path: string): Promise<void> => {
   const lifecyclePolicyText = await fs.readFile(path, { encoding: 'utf-8' })
   core.debug(`putting the lifecycle policy ${path} to repository ${repositoryName}`)
 
-  const ecr = new aws.ECR()
-  await ecr.putLifecyclePolicy({ repositoryName, lifecyclePolicyText }).promise()
+  await client.send(new PutLifecyclePolicyCommand({ repositoryName, lifecyclePolicyText }))
   core.info(`successfully put lifecycle policy ${path} to repository ${repositoryName}`)
 }

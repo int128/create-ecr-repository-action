@@ -24,7 +24,9 @@
   "author": "int128",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "1.6.0"
+    "@actions/core": "1.6.0",
+    "@aws-sdk/client-ecr": "^3.49.0",
+    "@aws-sdk/client-ecr-public": "^3.49.0"
   },
   "devDependencies": {
     "@tsconfig/node16": "1.0.2",
