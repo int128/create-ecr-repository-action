@@ -24,12 +24,10 @@
   "author": "int128",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "1.6.0",
-    "aws-sdk": "2.1073.0"
+    "@actions/core": "1.6.0"
   },
   "devDependencies": {
     "@tsconfig/node16": "1.0.2",
-    "@types/aws-sdk": "2.7.0",
     "@types/jest": "27.4.0",
     "@types/node": "16.11.24",
     "@typescript-eslint/eslint-plugin": "5.11.0",
