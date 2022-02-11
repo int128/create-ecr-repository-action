@@ -72,12 +72,7 @@ const createRepositoryIfNotExist = async (client: ECRClient, name: string): Prom
   }
 }
 
-const isRepositoryNotFoundException = (error: unknown): boolean => {
-  if (error instanceof Error) {
-    return error.name === 'RepositoryNotFoundException'
-  }
-  return false
-}
+const isRepositoryNotFoundException = (e: unknown) => e instanceof Error && e.name === 'RepositoryNotFoundException'
 
 const putLifecyclePolicy = async (client: ECRClient, repositoryName: string, path: string): Promise<void> => {
   const lifecyclePolicyText = await fs.readFile(path, { encoding: 'utf-8' })

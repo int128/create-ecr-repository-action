@@ -63,12 +63,7 @@ const createRepositoryIfNotExist = async (client: ECRPUBLICClient, name: string)
   }
 }
 
-const isRepositoryNotFoundException = (error: unknown): boolean => {
-  if (error instanceof Error) {
-    return error.name === 'RepositoryNotFoundException'
-  }
-  return false
-}
+const isRepositoryNotFoundException = (e: unknown) => e instanceof Error && e.name === 'RepositoryNotFoundException'
 
 // ECR Public does not support the lifecycle policy
 // https://github.com/aws/containers-roadmap/issues/1268

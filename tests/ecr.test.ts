@@ -20,8 +20,8 @@ describe('Create an ECR repository if not exist', () => {
       ],
     })
 
-    const repository = await runForECR({ repository: 'foobar' })
-    expect(repository.repositoryUri).toEqual('123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar')
+    const output = await runForECR({ repository: 'foobar' })
+    expect(output.repositoryUri).toEqual('123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar')
   })
 
   test('creates a repository', async () => {
@@ -35,8 +35,8 @@ describe('Create an ECR repository if not exist', () => {
       },
     })
 
-    const repository = await runForECR({ repository: 'foobar' })
-    expect(repository.repositoryUri).toEqual('123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar')
+    const output = await runForECR({ repository: 'foobar' })
+    expect(output.repositoryUri).toEqual('123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar')
   })
 
   test('general error occurred on describe', async () => {
@@ -74,7 +74,11 @@ describe('Put a lifecycle policy', () => {
         repositoryName: 'foobar',
       })
 
-    await runForECR({ repository: 'foobar', lifecyclePolicy: `${__dirname}/fixtures/lifecycle-policy.json` })
+    const output = await runForECR({
+      repository: 'foobar',
+      lifecyclePolicy: `${__dirname}/fixtures/lifecycle-policy.json`,
+    })
+    expect(output.repositoryUri).toBe('123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar')
   })
 
   test('file not exist', async () => {
