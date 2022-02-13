@@ -79,7 +79,7 @@
     "@aws-sdk/types" "3.49.0"
     tslib "^2.3.0"
 
-"@aws-sdk/client-ecr-public@^3.49.0":
+"@aws-sdk/client-ecr-public@3.49.0":
   version "3.49.0"
   resolved "https://registry.yarnpkg.com/@aws-sdk/client-ecr-public/-/client-ecr-public-3.49.0.tgz#7ec691e78e911b44cb5b8a5ee72eaddbfebf3195"
   integrity sha512-DxNThxYPfb9tcthmeR5tO0AkWDSYvhPgiBWRehKS8QQY4ZOPNBFzvfUf+OSr/wZDJNTvJiAAp1vF6vtgScqRyg==
@@ -118,7 +118,7 @@
     "@aws-sdk/util-utf8-node" "3.49.0"
     tslib "^2.3.0"
 
-"@aws-sdk/client-ecr@^3.49.0":
+"@aws-sdk/client-ecr@3.49.0":
   version "3.49.0"
   resolved "https://registry.yarnpkg.com/@aws-sdk/client-ecr/-/client-ecr-3.49.0.tgz#b2ad91e10d47811d09e2399e5c8e71b5631ef98d"
   integrity sha512-c/MJbYVx/yLLUPvmxc6Mz26kdU2PgXR3T2BhsboLLF7Wfe3n+wECq+WyyXA2bwbm1g6UUpxN0ANfhT71MmhGxQ==
@@ -1942,7 +1942,7 @@ asynckit@^0.4.0:
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
   integrity sha1-x57Zf380y48robyXkLzDZkdLS3k=
 
-aws-sdk-client-mock@^0.5.6:
+aws-sdk-client-mock@0.5.6:
   version "0.5.6"
   resolved "https://registry.yarnpkg.com/aws-sdk-client-mock/-/aws-sdk-client-mock-0.5.6.tgz#73c44356aa49f24467e52dfeef4b6b33c164d91d"
   integrity sha512-67C+6vlSMPhVGaDlUak3XVR/qvah4ENMMJMl+aWVnK42pBznQQuNvYzlg+OBeW+aBa6kOVDSAYstIqNfInIB/A==
