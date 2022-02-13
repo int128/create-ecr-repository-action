@@ -1,4 +1,6 @@
-import aws from 'aws-sdk'
+import { mockClient } from 'aws-sdk-client-mock'
+import * as ecr from '@aws-sdk/client-ecr'
+import * as ecrPublic from '@aws-sdk/client-ecr-public'
 import * as core from '@actions/core'
 import { run } from '../src/run'
 
@@ -11,30 +13,13 @@ jest.mock('@actions/core', () => {
 })
 const setOutputMock = core.setOutput as jest.Mock
 
-const ecrPromise = {
-  describeRepositories: jest.fn<Promise<aws.ECR.DescribeRepositoriesResponse>, []>(),
-  createRepository: jest.fn<Promise<aws.ECR.CreateRepositoryResponse>, []>(),
-  putLifecyclePolicy: jest.fn<Promise<aws.ECR.PutLifecyclePolicyResponse>, []>(),
+const mocks = {
+  ecr: mockClient(ecr.ECRClient),
+  ecrPublic: mockClient(ecrPublic.ECRPUBLICClient),
 }
-const ecr = {
-  describeRepositories: jest.fn(() => ({ promise: ecrPromise.describeRepositories })),
-  createRepository: jest.fn(() => ({ promise: ecrPromise.createRepository })),
-  putLifecyclePolicy: jest.fn(() => ({ promise: ecrPromise.putLifecyclePolicy })),
-}
-
-const ecrPublicPromise = {
-  describeRepositories: jest.fn<Promise<aws.ECRPUBLIC.DescribeRepositoriesResponse>, []>(),
-  createRepository: jest.fn<Promise<aws.ECRPUBLIC.CreateRepositoryResponse>, []>(),
-}
-const ecrPublic = {
-  describeRepositories: jest.fn(() => ({ promise: ecrPublicPromise.describeRepositories })),
-  createRepository: jest.fn(() => ({ promise: ecrPublicPromise.createRepository })),
-}
-
-jest.mock('aws-sdk', () => ({ ECR: jest.fn(() => ecr), ECRPUBLIC: jest.fn(() => ecrPublic) }))
 
 test('ecr', async () => {
-  ecrPromise.describeRepositories.mockResolvedValue({
+  mocks.ecr.on(ecr.DescribeRepositoriesCommand).resolves({
     repositories: [
       {
         repositoryName: 'foobar',
@@ -42,7 +27,7 @@ test('ecr', async () => {
       },
     ],
   })
-  ecrPromise.putLifecyclePolicy.mockResolvedValue({
+  mocks.ecr.on(ecr.PutLifecyclePolicyCommand).resolves({
     repositoryName: 'foobar',
   })
   await run({
@@ -54,7 +39,7 @@ test('ecr', async () => {
 })
 
 test('ecr public', async () => {
-  ecrPublicPromise.describeRepositories.mockResolvedValue({
+  mocks.ecrPublic.on(ecrPublic.DescribeRepositoriesCommand).resolves({
     repositories: [
       {
         repositoryName: 'foobar',

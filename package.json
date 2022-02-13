@@ -25,16 +25,17 @@
   "license": "MIT",
   "dependencies": {
     "@actions/core": "1.6.0",
-    "aws-sdk": "2.1073.0"
+    "@aws-sdk/client-ecr": "^3.49.0",
+    "@aws-sdk/client-ecr-public": "^3.49.0"
   },
   "devDependencies": {
     "@tsconfig/node16": "1.0.2",
-    "@types/aws-sdk": "2.7.0",
     "@types/jest": "27.4.0",
     "@types/node": "16.11.24",
     "@typescript-eslint/eslint-plugin": "5.11.0",
     "@typescript-eslint/parser": "5.11.0",
     "@vercel/ncc": "0.33.3",
+    "aws-sdk-client-mock": "^0.5.6",
     "eslint": "8.9.0",
     "eslint-plugin-jest": "26.1.0",
     "jest": "27.5.1",
