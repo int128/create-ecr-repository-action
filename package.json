@@ -36,7 +36,7 @@
     "@typescript-eslint/parser": "5.22.0",
     "@vercel/ncc": "0.33.4",
     "aws-sdk-client-mock": "0.6.2",
-    "eslint": "8.14.0",
+    "eslint": "8.15.0",
     "eslint-plugin-jest": "26.1.5",
     "jest": "28.1.0",
     "js-yaml": "4.1.0",
