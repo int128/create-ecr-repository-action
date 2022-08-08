@@ -24,7 +24,7 @@
   "author": "int128",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "1.9.0",
+    "@actions/core": "1.9.1",
     "@aws-sdk/client-ecr": "3.142.0",
     "@aws-sdk/client-ecr-public": "3.142.0"
   },
