@@ -25,8 +25,8 @@
   "license": "MIT",
   "dependencies": {
     "@actions/core": "1.9.1",
-    "@aws-sdk/client-ecr": "3.165.0",
-    "@aws-sdk/client-ecr-public": "3.165.0"
+    "@aws-sdk/client-ecr": "3.168.0",
+    "@aws-sdk/client-ecr-public": "3.168.0"
   },
   "devDependencies": {
     "@tsconfig/node16": "1.0.3",
