@@ -88,10 +88,10 @@
     "@aws-sdk/types" "3.193.0"
     tslib "^2.3.1"
 
-"@aws-sdk/client-ecr-public@3.194.0":
-  version "3.194.0"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/client-ecr-public/-/client-ecr-public-3.194.0.tgz#6d4219c24d93380937dcc6ea33ec8a100f586f6b"
-  integrity sha512-/vOjFU8OMuvAbsk0wS8IxPzA6brALQlBcYHs5bucgwqC8Q3Ppnp27eOBjW8lbD5B//X5TzjaRVs0VPczVLciGA==
+"@aws-sdk/client-ecr-public@3.195.0":
+  version "3.195.0"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/client-ecr-public/-/client-ecr-public-3.195.0.tgz#8f418deb7680c57e4e7282816dccd457a5599d1a"
+  integrity sha512-VfqgR43Q70+xXdAghI+1UEYr7svIFo9UwOX+nY4yXDfm9W5PTQMPfdt2IxctakGbNGM9GvUvE84+ckQhVVHA2A==
   dependencies:
     "@aws-crypto/sha256-browser" "2.0.0"
     "@aws-crypto/sha256-js" "2.0.0"
@@ -102,6 +102,7 @@
     "@aws-sdk/hash-node" "3.193.0"
     "@aws-sdk/invalid-dependency" "3.193.0"
     "@aws-sdk/middleware-content-length" "3.193.0"
+    "@aws-sdk/middleware-endpoint" "3.193.0"
     "@aws-sdk/middleware-host-header" "3.193.0"
     "@aws-sdk/middleware-logger" "3.193.0"
     "@aws-sdk/middleware-recursion-detection" "3.193.0"
@@ -122,16 +123,17 @@
     "@aws-sdk/util-body-length-node" "3.188.0"
     "@aws-sdk/util-defaults-mode-browser" "3.193.0"
     "@aws-sdk/util-defaults-mode-node" "3.193.0"
+    "@aws-sdk/util-endpoints" "3.194.0"
     "@aws-sdk/util-user-agent-browser" "3.193.0"
     "@aws-sdk/util-user-agent-node" "3.193.0"
     "@aws-sdk/util-utf8-browser" "3.188.0"
     "@aws-sdk/util-utf8-node" "3.188.0"
     tslib "^2.3.1"
 
-"@aws-sdk/client-ecr@3.194.0":
-  version "3.194.0"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/client-ecr/-/client-ecr-3.194.0.tgz#64d418519b4be0b5a42f298032f933914c045657"
-  integrity sha512-2clGkiFPrs5SRGMX9F7p8m45B6J+vK2wx0tMFxNP6a1jyLkT43u1MpQ8yj2Sc7cDsUaZUuTmd7kk54OrGyPkMg==
+"@aws-sdk/client-ecr@3.195.0":
+  version "3.195.0"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/client-ecr/-/client-ecr-3.195.0.tgz#aca53f53af6d6dbdb16c3a1c7a028f1edb92578d"
+  integrity sha512-wjXWcr4Dmx1NjxN6l0kdeiP96BUF0cSbgaE+rJFrjhQw1lEHl3Ucpsmp9eP7cFvuYot75RuSgoMg2ed+rWCVmQ==
   dependencies:
     "@aws-crypto/sha256-browser" "2.0.0"
     "@aws-crypto/sha256-js" "2.0.0"
@@ -142,6 +144,7 @@
     "@aws-sdk/hash-node" "3.193.0"
     "@aws-sdk/invalid-dependency" "3.193.0"
     "@aws-sdk/middleware-content-length" "3.193.0"
+    "@aws-sdk/middleware-endpoint" "3.193.0"
     "@aws-sdk/middleware-host-header" "3.193.0"
     "@aws-sdk/middleware-logger" "3.193.0"
     "@aws-sdk/middleware-recursion-detection" "3.193.0"
@@ -162,6 +165,7 @@
     "@aws-sdk/util-body-length-node" "3.188.0"
     "@aws-sdk/util-defaults-mode-browser" "3.193.0"
     "@aws-sdk/util-defaults-mode-node" "3.193.0"
+    "@aws-sdk/util-endpoints" "3.194.0"
     "@aws-sdk/util-user-agent-browser" "3.193.0"
     "@aws-sdk/util-user-agent-node" "3.193.0"
     "@aws-sdk/util-utf8-browser" "3.188.0"
