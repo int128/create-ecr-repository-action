@@ -35,7 +35,7 @@ test('ecr', async () => {
     lifecyclePolicy: `${__dirname}/fixtures/lifecycle-policy.json`,
     public: false,
   })
-  expect(setOutputMock).toBeCalledWith('repository-uri', '123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar')
+  expect(setOutputMock).toHaveBeenCalledWith('repository-uri', '123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar')
 })
 
 test('ecr public', async () => {
@@ -52,5 +52,5 @@ test('ecr public', async () => {
     lifecyclePolicy: '',
     public: true,
   })
-  expect(setOutputMock).toBeCalledWith('repository-uri', 'public.ecr.aws/12345678/foobar')
+  expect(setOutputMock).toHaveBeenCalledWith('repository-uri', 'public.ecr.aws/12345678/foobar')
 })

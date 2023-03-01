@@ -42,7 +42,7 @@ describe('Create an ECR repository if not exist', () => {
   test('general error occurred on describe', async () => {
     ecrMock.on(DescribeRepositoriesCommand).rejects({ name: 'ConfigError' })
 
-    await expect(runForECR({ repository: 'foobar' })).rejects.toThrowError()
+    await expect(runForECR({ repository: 'foobar' })).rejects.toThrow()
   })
 
   test('general error occurred on create', async () => {
@@ -51,7 +51,7 @@ describe('Create an ECR repository if not exist', () => {
       .rejects({ name: 'RepositoryNotFoundException' })
     ecrMock.on(CreateRepositoryCommand, { repositoryName: 'foobar' }).rejects({ name: 'ConfigError' })
 
-    await expect(runForECR({ repository: 'foobar' })).rejects.toThrowError()
+    await expect(runForECR({ repository: 'foobar' })).rejects.toThrow()
   })
 })
 
@@ -91,6 +91,6 @@ describe('Put a lifecycle policy', () => {
       ],
     })
 
-    await expect(runForECR({ repository: 'foobar', lifecyclePolicy: 'wrong-path' })).rejects.toThrowError()
+    await expect(runForECR({ repository: 'foobar', lifecyclePolicy: 'wrong-path' })).rejects.toThrow()
   })
 })
