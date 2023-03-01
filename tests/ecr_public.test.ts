@@ -39,7 +39,7 @@ describe('Create an ECR repository if not exist', () => {
       .on(DescribeRepositoriesCommand, { repositoryNames: ['foobar'] })
       .rejects({ name: 'ConfigError', message: 'ConfigError' })
 
-    await expect(runForECRPublic({ repository: 'foobar' })).rejects.toThrowError({
+    await expect(runForECRPublic({ repository: 'foobar' })).rejects.toThrow({
       name: 'ConfigError',
       message: 'ConfigError',
     })
@@ -53,7 +53,7 @@ describe('Create an ECR repository if not exist', () => {
       .on(CreateRepositoryCommand, { repositoryName: 'foobar' })
       .rejects({ name: 'ConfigError', message: 'ConfigError' })
 
-    await expect(runForECRPublic({ repository: 'foobar' })).rejects.toThrowError({
+    await expect(runForECRPublic({ repository: 'foobar' })).rejects.toThrow({
       name: 'ConfigError',
       message: 'ConfigError',
     })
