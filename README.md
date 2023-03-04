@@ -1,4 +1,4 @@
-# create-ecr-repository-action [![ts](https://github.com/int128/create-ecr-repository-action/actions/workflows/ts.yml/badge.svg)](https://github.com/int128/create-ecr-repository-action/actions/workflows/ts.yml)
+# create-ecr-repository-action [![ts](https://github.com/int128/create-ecr-repository-action/actions/workflows/ts.yaml/badge.svg)](https://github.com/int128/create-ecr-repository-action/actions/workflows/ts.yaml)
 
 This is a GitHub Action to create a repository into Amazon ECR or ECR Public registry if it does not exist.
 It can put a lifecycle policy to the repository for cost saving.
@@ -56,20 +56,29 @@ Here is a full example to build an image and put it into an ECR repository:
 ```yaml
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     steps:
-      - uses: actions/checkout@v2
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::ACCOUNT:role/ROLE
       - uses: aws-actions/amazon-ecr-login@v1
       - uses: int128/create-ecr-repository-action@v1
         id: ecr
         with:
-          repository: hello-world
-      - run: docker build -t ${{ steps.ecr.outputs.repository-uri }}:latest .
-      - run: docker push ${{ steps.ecr.outputs.repository-uri }}:latest
+          repository: ${{ github.repository }}
+      - uses: docker/metadata-action@v4
+        id: metadata
+        with:
+          images: ${{ steps.ecr.outputs.repository-uri }}
+      - uses: docker/build-push-action@v3
+        with:
+          push: true
+          tags: ${{ steps.metadata.outputs.tags }}
+          labels: ${{ steps.metadata.outputs.labels }}
 ```
-
-Use a release tag such as `v1`.
-Do not use `main` branch because it does not contain `dist` files.
 
 
 ## Inputs
