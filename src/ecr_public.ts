@@ -5,9 +5,11 @@ import {
   CreateRepositoryCommand,
   Repository,
 } from '@aws-sdk/client-ecr-public'
+import { setRepositoryPolicy } from './common'
 
 type Inputs = {
   repository: string
+  repositoryPolicy?: string
 }
 
 type Outputs = {
@@ -26,6 +28,15 @@ export const runForECRPublic = async (inputs: Inputs): Promise<Outputs> => {
   if (repository.repositoryUri === undefined) {
     throw new Error('unexpected response: repositoryUri === undefined')
   }
+
+  const repositoryPolicy = inputs.repositoryPolicy
+  if (repositoryPolicy !== undefined) {
+    await core.group(
+      `Put the repository policy to repository ${inputs.repository}`,
+      async () => await setRepositoryPolicy(client, inputs.repository, repositoryPolicy)
+    )
+  }
+
   return {
     repositoryUri: repository.repositoryUri,
   }

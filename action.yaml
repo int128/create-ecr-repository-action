@@ -13,6 +13,9 @@ inputs:
   lifecycle-policy:
     required: false
     description: path to lifecycle policy file of the repository (optional)
+  repository-policy:
+    required: false
+    description: path to repository policy file of the repository (optional)
 
 outputs:
   repository-uri:

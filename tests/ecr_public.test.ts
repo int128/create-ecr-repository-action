@@ -1,5 +1,5 @@
 import { mockClient } from 'aws-sdk-client-mock'
-import { CreateRepositoryCommand, DescribeRepositoriesCommand, ECRPUBLICClient } from '@aws-sdk/client-ecr-public'
+import { CreateRepositoryCommand, DescribeRepositoriesCommand, SetRepositoryPolicyCommand, ECRPUBLICClient } from '@aws-sdk/client-ecr-public'
 import { runForECRPublic } from '../src/ecr_public'
 
 const ecrMock = mockClient(ECRPUBLICClient)
@@ -59,3 +59,44 @@ describe('Create an ECR repository if not exist', () => {
     })
   })
 })
+
+describe('Put a repository policy', () => {
+  test('success', async () => {
+    ecrMock.on(DescribeRepositoriesCommand).resolves({
+      repositories: [
+        {
+          repositoryName: 'foobar',
+          repositoryUri: 'public.ecr.aws/12345678/foobar',
+        },
+      ],
+    })
+    ecrMock
+      .on(SetRepositoryPolicyCommand, {
+        repositoryName: 'foobar',
+        policyText: `{ "Version": "2008-10-17", "Statement": [{"Sid": "AllowPull", "Effect": "Allow", "Principal": {"AWS": ["arn:aws:iam::012345678910:root"]}, "Action": ["ListImages"]}]}`,
+      })
+      .resolves({
+        repositoryName: 'foobar',
+      })
+
+    const output = await runForECRPublic({
+      repository: 'foobar',
+      repositoryPolicy: `${__dirname}/fixtures/repository-policy.json`,
+    })
+    expect(output.repositoryUri).toBe('public.ecr.aws/12345678/foobar')
+  })
+
+  test('file not exist', async () => {
+    ecrMock.on(DescribeRepositoriesCommand).resolves({
+      repositories: [
+        {
+          repositoryName: 'foobar',
+          repositoryUri: 'public.ecr.aws/12345678/foobar',
+        },
+      ],
+    })
+
+    await expect(runForECRPublic({ repository: 'foobar', repositoryPolicy: 'wrong-path' })).rejects.toThrow()
+  })
+})
+

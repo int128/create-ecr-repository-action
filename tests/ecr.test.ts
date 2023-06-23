@@ -4,6 +4,7 @@ import {
   DescribeRepositoriesCommand,
   ECRClient,
   PutLifecyclePolicyCommand,
+  SetRepositoryPolicyCommand
 } from '@aws-sdk/client-ecr'
 import { runForECR } from '../src/ecr'
 
@@ -92,5 +93,45 @@ describe('Put a lifecycle policy', () => {
     })
 
     await expect(runForECR({ repository: 'foobar', lifecyclePolicy: 'wrong-path' })).rejects.toThrow()
+  })
+})
+
+describe('Put a repository policy', () => {
+  test('success', async () => {
+    ecrMock.on(DescribeRepositoriesCommand).resolves({
+      repositories: [
+        {
+          repositoryName: 'foobar',
+          repositoryUri: '123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar',
+        },
+      ],
+    })
+    ecrMock
+      .on(SetRepositoryPolicyCommand, {
+        repositoryName: 'foobar',
+        policyText: `{ "Version": "2008-10-17", "Statement": [{"Sid": "AllowPull", "Effect": "Allow", "Principal": {"AWS": ["arn:aws:iam::012345678910:root"]}, "Action": ["ListImages"]}]}`,
+      })
+      .resolves({
+        repositoryName: 'foobar',
+      })
+
+    const output = await runForECR({
+      repository: 'foobar',
+      repositoryPolicy: `${__dirname}/fixtures/repository-policy.json`,
+    })
+    expect(output.repositoryUri).toBe('123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar')
+  })
+
+  test('file not exist', async () => {
+    ecrMock.on(DescribeRepositoriesCommand).resolves({
+      repositories: [
+        {
+          repositoryName: 'foobar',
+          repositoryUri: '123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar',
+        },
+      ],
+    })
+
+    await expect(runForECR({ repository: 'foobar', repositoryPolicy: 'wrong-path' })).rejects.toThrow()
   })
 })

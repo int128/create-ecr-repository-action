@@ -4,13 +4,16 @@ import {
   DescribeRepositoriesCommand,
   CreateRepositoryCommand,
   PutLifecyclePolicyCommand,
+  SetRepositoryPolicyCommand,
   Repository,
 } from '@aws-sdk/client-ecr'
 import { promises as fs } from 'fs'
+import { setRepositoryPolicy } from './common'
 
 type Inputs = {
   repository: string
   lifecyclePolicy?: string
+  repositoryPolicy?: string
 }
 
 type Outputs = {
@@ -35,6 +38,15 @@ export const runForECR = async (inputs: Inputs): Promise<Outputs> => {
       async () => await putLifecyclePolicy(client, inputs.repository, lifecyclePolicy)
     )
   }
+
+  const repositoryPolicy = inputs.repositoryPolicy
+  if (repositoryPolicy !== undefined) {
+    await core.group(
+      `Put the repository policy to repository ${inputs.repository}`,
+      async () => await setRepositoryPolicy(client, inputs.repository, repositoryPolicy)
+    )
+  }
+
   return {
     repositoryUri: repository.repositoryUri,
   }
