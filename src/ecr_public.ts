@@ -21,7 +21,7 @@ export const runForECRPublic = async (inputs: Inputs): Promise<Outputs> => {
 
   const repository = await core.group(
     `Create repository ${inputs.repository} if not exist`,
-    async () => await createRepositoryIfNotExist(client, inputs.repository)
+    async () => await createRepositoryIfNotExist(client, inputs.repository),
   )
   if (repository.repositoryUri === undefined) {
     throw new Error('unexpected response: repositoryUri === undefined')

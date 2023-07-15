@@ -37,7 +37,7 @@ test('ecr', async () => {
   })
   expect(setOutputMock).toHaveBeenCalledWith(
     'repository-uri',
-    '123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar'
+    '123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar',
   )
 })
 

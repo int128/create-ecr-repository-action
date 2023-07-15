@@ -22,7 +22,7 @@ export const runForECR = async (inputs: Inputs): Promise<Outputs> => {
 
   const repository = await core.group(
     `Create repository ${inputs.repository} if not exist`,
-    async () => await createRepositoryIfNotExist(client, inputs.repository)
+    async () => await createRepositoryIfNotExist(client, inputs.repository),
   )
   if (repository.repositoryUri === undefined) {
     throw new Error('unexpected response: repositoryUri === undefined')
@@ -32,7 +32,7 @@ export const runForECR = async (inputs: Inputs): Promise<Outputs> => {
   if (lifecyclePolicy !== undefined) {
     await core.group(
       `Put the lifecycle policy to repository ${inputs.repository}`,
-      async () => await putLifecyclePolicy(client, inputs.repository, lifecyclePolicy)
+      async () => await putLifecyclePolicy(client, inputs.repository, lifecyclePolicy),
     )
   }
   return {
