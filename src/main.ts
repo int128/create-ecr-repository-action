@@ -6,6 +6,7 @@ const main = async (): Promise<void> => {
     public: core.getBooleanInput('public', { required: true }),
     repository: core.getInput('repository', { required: true }),
     lifecyclePolicy: core.getInput('lifecycle-policy'),
+    repositoryPolicy: core.getInput('repository-policy'),
   })
 }
 

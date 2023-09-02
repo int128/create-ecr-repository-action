@@ -6,6 +6,7 @@ interface Inputs {
   public: boolean
   repository: string
   lifecyclePolicy: string
+  repositoryPolicy: string
 }
 
 export const run = async (inputs: Inputs): Promise<void> => {
@@ -21,6 +22,7 @@ export const run = async (inputs: Inputs): Promise<void> => {
   const outputs = await runForECR({
     repository: inputs.repository,
     lifecyclePolicy: inputs.lifecyclePolicy !== '' ? inputs.lifecyclePolicy : undefined,
+    repositoryPolicy: inputs.repositoryPolicy !== '' ? inputs.repositoryPolicy : undefined,
   })
   core.setOutput('repository-uri', outputs.repositoryUri)
   return

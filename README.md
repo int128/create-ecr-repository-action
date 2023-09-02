@@ -88,7 +88,7 @@ jobs:
 | `public` | `false` | Set `true` to create into ECR Public registry
 | `repository` | (required) | Repository name to create
 | `lifecycle-policy` | - | Path to a file of lifecycle policy for the repository
-
+| `repository-policy` | - |  Path to a file of repository policy for the repository
 
 ## Outputs
 
