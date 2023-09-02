@@ -42,7 +42,7 @@ export const runForECR = async (inputs: Inputs): Promise<Outputs> => {
   if (repositoryPolicy !== undefined) {
     await core.group(
       `Put the repository policy to repository ${inputs.repository}`,
-      async () => await setRepositoryPolicy(client, inputs.repository, repositoryPolicy)
+      async () => await setRepositoryPolicy(client, inputs.repository, repositoryPolicy),
     )
   }
 

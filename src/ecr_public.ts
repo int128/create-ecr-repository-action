@@ -34,7 +34,7 @@ export const runForECRPublic = async (inputs: Inputs): Promise<Outputs> => {
   if (repositoryPolicy !== undefined) {
     await core.group(
       `Put the repository policy to repository ${inputs.repository}`,
-      async () => await setRepositoryPolicy(client, inputs.repository, repositoryPolicy)
+      async () => await setRepositoryPolicy(client, inputs.repository, repositoryPolicy),
     )
   }
 
@@ -80,7 +80,11 @@ const isRepositoryNotFoundException = (e: unknown) => e instanceof Error && e.na
 // ECR Public does not support the lifecycle policy
 // https://github.com/aws/containers-roadmap/issues/1268
 
-export const setRepositoryPolicy = async (client: ECRPUBLICClient, repositoryName: string, path: string): Promise<void> => {
+export const setRepositoryPolicy = async (
+  client: ECRPUBLICClient,
+  repositoryName: string,
+  path: string,
+): Promise<void> => {
   const policyText = await fs.readFile(path, { encoding: 'utf-8' })
   core.debug(`setting the repository policy ${path} to repository ${repositoryName}`)
 

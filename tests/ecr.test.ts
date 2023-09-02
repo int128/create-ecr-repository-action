@@ -4,7 +4,7 @@ import {
   DescribeRepositoriesCommand,
   ECRClient,
   PutLifecyclePolicyCommand,
-  SetRepositoryPolicyCommand
+  SetRepositoryPolicyCommand,
 } from '@aws-sdk/client-ecr'
 import { runForECR } from '../src/ecr'
 

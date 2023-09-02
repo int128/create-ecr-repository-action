@@ -33,7 +33,7 @@ test('ecr', async () => {
   await run({
     repository: 'foo/bar',
     lifecyclePolicy: `${__dirname}/fixtures/lifecycle-policy.json`,
-    repositoryPolicy:  `${__dirname}/fixtures/repository-policy.json`,
+    repositoryPolicy: `${__dirname}/fixtures/repository-policy.json`,
     public: false,
   })
   expect(setOutputMock).toHaveBeenCalledWith(
@@ -54,7 +54,7 @@ test('ecr public', async () => {
   await run({
     repository: 'foo/bar',
     lifecyclePolicy: '',
-    repositoryPolicy:  `${__dirname}/fixtures/repository-policy.json`,
+    repositoryPolicy: `${__dirname}/fixtures/repository-policy.json`,
     public: true,
   })
   expect(setOutputMock).toHaveBeenCalledWith('repository-uri', 'public.ecr.aws/12345678/foobar')

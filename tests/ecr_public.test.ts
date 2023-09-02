@@ -1,5 +1,10 @@
 import { mockClient } from 'aws-sdk-client-mock'
-import { CreateRepositoryCommand, DescribeRepositoriesCommand, SetRepositoryPolicyCommand, ECRPUBLICClient } from '@aws-sdk/client-ecr-public'
+import {
+  CreateRepositoryCommand,
+  DescribeRepositoriesCommand,
+  SetRepositoryPolicyCommand,
+  ECRPUBLICClient,
+} from '@aws-sdk/client-ecr-public'
 import { runForECRPublic } from '../src/ecr_public'
 
 const ecrMock = mockClient(ECRPUBLICClient)
@@ -99,4 +104,3 @@ describe('Put a repository policy', () => {
     await expect(runForECRPublic({ repository: 'foobar', repositoryPolicy: 'wrong-path' })).rejects.toThrow()
   })
 })
-
