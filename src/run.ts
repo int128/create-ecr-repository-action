@@ -1,29 +1,28 @@
-import * as core from '@actions/core'
 import { runForECR } from './ecr'
 import { runForECRPublic } from './ecr_public'
 
-interface Inputs {
+type Inputs = {
   public: boolean
   repository: string
   lifecyclePolicy: string
   repositoryPolicy: string
 }
 
-export const run = async (inputs: Inputs): Promise<void> => {
+type Outputs = {
+  repositoryUri: string
+}
+
+export const run = async (inputs: Inputs): Promise<Outputs> => {
   if (inputs.public === true) {
     if (inputs.lifecyclePolicy) {
       throw new Error(`currently ECR Public does not support the lifecycle policy`)
     }
-    const outputs = await runForECRPublic(inputs)
-    core.setOutput('repository-uri', outputs.repositoryUri)
-    return
+    return await runForECRPublic(inputs)
   }
 
-  const outputs = await runForECR({
+  return await runForECR({
     repository: inputs.repository,
-    lifecyclePolicy: inputs.lifecyclePolicy !== '' ? inputs.lifecyclePolicy : undefined,
-    repositoryPolicy: inputs.repositoryPolicy !== '' ? inputs.repositoryPolicy : undefined,
+    lifecyclePolicy: inputs.lifecyclePolicy ?? undefined,
+    repositoryPolicy: inputs.repositoryPolicy ?? undefined,
   })
-  core.setOutput('repository-uri', outputs.repositoryUri)
-  return
 }
