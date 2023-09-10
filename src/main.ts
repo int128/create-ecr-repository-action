@@ -5,8 +5,8 @@ const main = async (): Promise<void> => {
   const outputs = await run({
     public: core.getBooleanInput('public', { required: true }),
     repository: core.getInput('repository', { required: true }),
-    lifecyclePolicy: core.getInput('lifecycle-policy'),
-    repositoryPolicy: core.getInput('repository-policy'),
+    lifecyclePolicy: core.getInput('lifecycle-policy') || undefined,
+    repositoryPolicy: core.getInput('repository-policy') || undefined,
   })
   core.info(`Outputs: ${JSON.stringify(outputs)}`)
   core.setOutput('repository-uri', outputs.repositoryUri)

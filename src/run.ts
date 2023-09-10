@@ -4,8 +4,8 @@ import { runForECRPublic } from './ecr_public'
 type Inputs = {
   public: boolean
   repository: string
-  lifecyclePolicy: string
-  repositoryPolicy: string
+  lifecyclePolicy: string | undefined
+  repositoryPolicy: string | undefined
 }
 
 type Outputs = {
@@ -20,9 +20,5 @@ export const run = async (inputs: Inputs): Promise<Outputs> => {
     return await runForECRPublic(inputs)
   }
 
-  return await runForECR({
-    repository: inputs.repository,
-    lifecyclePolicy: inputs.lifecyclePolicy ?? undefined,
-    repositoryPolicy: inputs.repositoryPolicy ?? undefined,
-  })
+  return await runForECR(inputs)
 }
