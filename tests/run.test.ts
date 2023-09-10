@@ -40,7 +40,7 @@ test('ecr public', async () => {
   })
   const outputs = await run({
     repository: 'foo/bar',
-    lifecyclePolicy: '',
+    lifecyclePolicy: undefined,
     repositoryPolicy: `${__dirname}/fixtures/repository-policy.json`,
     public: true,
   })
