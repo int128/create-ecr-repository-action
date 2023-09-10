@@ -7,6 +7,7 @@ import {
   SetRepositoryPolicyCommand,
   Repository,
 } from '@aws-sdk/client-ecr'
+import assert from 'assert'
 import { promises as fs } from 'fs'
 
 type Inputs = {
@@ -26,9 +27,7 @@ export const runForECR = async (inputs: Inputs): Promise<Outputs> => {
     `Create repository ${inputs.repository} if not exist`,
     async () => await createRepositoryIfNotExist(client, inputs.repository),
   )
-  if (repository.repositoryUri === undefined) {
-    throw new Error('unexpected response: repositoryUri === undefined')
-  }
+  assert(repository.repositoryUri !== undefined)
 
   const lifecyclePolicy = inputs.lifecyclePolicy
   if (lifecyclePolicy !== undefined) {
@@ -54,31 +53,21 @@ export const runForECR = async (inputs: Inputs): Promise<Outputs> => {
 const createRepositoryIfNotExist = async (client: ECRClient, name: string): Promise<Repository> => {
   try {
     const describe = await client.send(new DescribeRepositoriesCommand({ repositoryNames: [name] }))
-    if (describe.repositories === undefined) {
-      throw new Error(`unexpected response describe.repositories was undefined`)
-    }
-    if (describe.repositories.length !== 1) {
-      throw new Error(`unexpected response describe.repositories = ${JSON.stringify(describe.repositories)}`)
-    }
+    assert(describe.repositories !== undefined)
+    assert.strictEqual(describe.repositories.length, 1)
+
     const found = describe.repositories[0]
-    if (found.repositoryUri === undefined) {
-      throw new Error(`unexpected response repositoryUri was undefined`)
-    }
+    assert(found.repositoryUri !== undefined)
     core.info(`repository ${found.repositoryUri} found`)
     return found
   } catch (error) {
     if (isRepositoryNotFoundException(error)) {
       const create = await client.send(new CreateRepositoryCommand({ repositoryName: name }))
-      if (create.repository === undefined) {
-        throw new Error(`unexpected response create.repository was undefined`)
-      }
-      if (create.repository.repositoryUri === undefined) {
-        throw new Error(`unexpected response create.repository.repositoryUri was undefined`)
-      }
+      assert(create.repository !== undefined)
+      assert(create.repository.repositoryUri !== undefined)
       core.info(`repository ${create.repository.repositoryUri} has been created`)
       return create.repository
     }
-
     throw error
   }
 }
