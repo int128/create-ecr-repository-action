@@ -10,7 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@actions/core": "1.10.0",
+    "@actions/core": "1.10.1",
     "@aws-sdk/client-ecr": "3.409.0",
     "@aws-sdk/client-ecr-public": "3.409.0"
   },
