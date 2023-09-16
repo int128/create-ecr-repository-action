@@ -1953,10 +1953,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.37.tgz#a3dd8da4eb84a996c36e331df98d82abd76b516e"
   integrity sha512-XYmBiy+ohOR4Lh5jE379fV2IU+6Jn4g5qASinhitfyO71b/sCo6MKsMLF5tc7Zf2CE8hViVQyYSobJNke8OvUw==
 
-"@types/node@16.18.51":
-  version "16.18.51"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.18.51.tgz#f56210dd99e6fd51d8765488c6b8e5684ca47039"
-  integrity sha512-LKA7ZhY30I8PiUOzBzhtnIULQTACpiEpPXLiYMWyS+tPAORf+rmXUadHZXB/KFrFyMjeHeKc1GFvLd+3f7LE3w==
+"@types/node@16.18.52":
+  version "16.18.52"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.18.52.tgz#70c56b55d0d7e15fafa875127e95a92605c59c9b"
+  integrity sha512-sm2aph6cRSsTMFYFgI+RpPLunXO9ClJkpizUVdT7KmGeyfQ14xnjTMT/f3MHcfKqevXqGT6BgVFzW8wcEoDUtA==
 
 "@types/semver@^7.5.0":
   version "7.5.0"
