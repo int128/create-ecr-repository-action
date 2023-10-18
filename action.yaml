@@ -22,5 +22,5 @@ outputs:
     description: URI of the repository, i.e. ACCOUNT.dkr.ecr.REGION.amazonaws.com/NAME
 
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'dist/index.js'
