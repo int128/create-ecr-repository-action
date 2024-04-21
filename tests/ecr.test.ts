@@ -6,7 +6,7 @@ import {
   PutLifecyclePolicyCommand,
   SetRepositoryPolicyCommand,
 } from '@aws-sdk/client-ecr'
-import { runForECR } from '../src/ecr'
+import { runForECR } from '../src/ecr.js'
 
 const ecrMock = mockClient(ECRClient)
 
