@@ -5,7 +5,7 @@ import {
   SetRepositoryPolicyCommand,
   ECRPUBLICClient,
 } from '@aws-sdk/client-ecr-public'
-import { runForECRPublic } from '../src/ecr_public'
+import { runForECRPublic } from '../src/ecr_public.js'
 
 const ecrMock = mockClient(ECRPUBLICClient)
 

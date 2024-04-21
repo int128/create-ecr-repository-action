@@ -1,5 +1,5 @@
-import { runForECR } from './ecr'
-import { runForECRPublic } from './ecr_public'
+import { runForECR } from './ecr.js'
+import { runForECRPublic } from './ecr_public.js'
 
 type Inputs = {
   public: boolean
