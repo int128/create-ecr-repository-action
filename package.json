@@ -9,8 +9,8 @@
   "type": "module",
   "dependencies": {
     "@actions/core": "1.10.1",
-    "@aws-sdk/client-ecr": "3.631.0",
-    "@aws-sdk/client-ecr-public": "3.631.0"
+    "@aws-sdk/client-ecr": "3.632.0",
+    "@aws-sdk/client-ecr-public": "3.632.0"
   },
   "devDependencies": {
     "@tsconfig/node20": "20.1.4",
