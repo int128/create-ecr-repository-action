@@ -16,7 +16,7 @@
     "@tsconfig/node20": "20.1.4",
     "@types/jest": "29.5.13",
     "@types/node": "20.16.6",
-    "@vercel/ncc": "0.38.1",
+    "@vercel/ncc": "0.38.2",
     "aws-sdk-client-mock": "4.0.2",
     "eslint": "9.11.1",
     "eslint-plugin-jest": "28.8.3",
