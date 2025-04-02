@@ -12,8 +12,8 @@ importers:
         specifier: 1.11.1
         version: 1.11.1
       '@aws-sdk/client-ecr':
-        specifier: 3.777.0
-        version: 3.777.0
+        specifier: 3.781.0
+        version: 3.781.0
       '@aws-sdk/client-ecr-public':
         specifier: 3.777.0
         version: 3.777.0
@@ -100,8 +100,8 @@ packages:
     resolution: {integrity: sha512-Yo9JwI+a/G7jQpVJm4YpZXMGd/RRkGGFZ4dTmScVD1Llp/CXoRr6eGdgjWN+jbYOE2pkoE1vEgjb6s+vu7Mmaw==}
     engines: {node: '>=18.0.0'}
 
-  '@aws-sdk/client-ecr@3.777.0':
-    resolution: {integrity: sha512-89g+FIPzwolkrJzqe093mAtd8oTLbkezuVG9XFO9KsRSjAnjaqKqRX6diRlrCCtqoBgA5aRxARlT88nCAcw4pA==}
+  '@aws-sdk/client-ecr@3.781.0':
+    resolution: {integrity: sha512-+8V8W17oh+xsi/RQJh3dPhOdSiMJ9Om4u79CBogtZuft+ITqXGRFAFmmSHmbxLuFkEhCSyt5yoPi7yjKNjDCSg==}
     engines: {node: '>=18.0.0'}
 
   '@aws-sdk/client-sso@3.777.0':
@@ -2110,7 +2110,7 @@ snapshots:
     transitivePeerDependencies:
       - aws-crt
 
-  '@aws-sdk/client-ecr@3.777.0':
+  '@aws-sdk/client-ecr@3.781.0':
     dependencies:
       '@aws-crypto/sha256-browser': 5.2.0
       '@aws-crypto/sha256-js': 5.2.0
