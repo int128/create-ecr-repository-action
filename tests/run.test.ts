@@ -25,6 +25,8 @@ test('ecr', async () => {
     lifecyclePolicy: `${__dirname}/fixtures/lifecycle-policy.json`,
     repositoryPolicy: `${__dirname}/fixtures/repository-policy.json`,
     public: false,
+    immutable: true,
+    tags: 'foo=bar,baz=qux',
   })
   expect(outputs).toStrictEqual({ repositoryUri: '123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar' })
 })
@@ -43,6 +45,8 @@ test('ecr public', async () => {
     lifecyclePolicy: undefined,
     repositoryPolicy: `${__dirname}/fixtures/repository-policy.json`,
     public: true,
+    immutable: true,
+    tags: 'foo=bar,baz=qux',
   })
   expect(outputs).toStrictEqual({ repositoryUri: 'public.ecr.aws/12345678/foobar' })
 })
