@@ -12,11 +12,11 @@ importers:
         specifier: 1.11.1
         version: 1.11.1
       '@aws-sdk/client-ecr':
-        specifier: 3.799.0
-        version: 3.799.0
+        specifier: 3.800.0
+        version: 3.800.0
       '@aws-sdk/client-ecr-public':
-        specifier: 3.799.0
-        version: 3.799.0
+        specifier: 3.800.0
+        version: 3.800.0
     devDependencies:
       '@eslint/js':
         specifier: 9.25.1
@@ -96,12 +96,12 @@ packages:
   '@aws-crypto/util@5.2.0':
     resolution: {integrity: sha512-4RkU9EsI6ZpBve5fseQlGNUWKMa1RLPQ1dnjnQoe07ldfIzcsGb5hC5W0Dm7u423KWzawlrpbjXBrXCEv9zazQ==}
 
-  '@aws-sdk/client-ecr-public@3.799.0':
-    resolution: {integrity: sha512-mHLE0Qyu5wqmh0bb5YFab0dNCbinr8NLyXFoI0wqnPYywU0TwdBLHqf1UjeY6Wekw8hKW7bhSwOcbiQQmsaHUA==}
+  '@aws-sdk/client-ecr-public@3.800.0':
+    resolution: {integrity: sha512-U4e5RJ47+HAez17h9BCRxedSpFOzcV5X37yMmSQw49M0uCu3RB5wjh4OYgfXrHKtkxeT6+diMjZhnARjd4aK0g==}
     engines: {node: '>=18.0.0'}
 
-  '@aws-sdk/client-ecr@3.799.0':
-    resolution: {integrity: sha512-ixnQERNx6rmo+xEXncXQVkTFmQTf+nF361MH981MT2DaPN+q7pG+Xo5sfq6bcJ6mcS0hP82T9ncA3aMTsma6GA==}
+  '@aws-sdk/client-ecr@3.800.0':
+    resolution: {integrity: sha512-vNkoc2qWwmypRXvHX0wI6+B20ry7mwClDRsEPBILgxW6T535k4cv4uCIAWhNioVyhmZtn4NPMmmlAKAUIGEvmw==}
     engines: {node: '>=18.0.0'}
 
   '@aws-sdk/client-sso@3.799.0':
@@ -2066,7 +2066,7 @@ snapshots:
       '@smithy/util-utf8': 2.3.0
       tslib: 2.6.2
 
-  '@aws-sdk/client-ecr-public@3.799.0':
+  '@aws-sdk/client-ecr-public@3.800.0':
     dependencies:
       '@aws-crypto/sha256-browser': 5.2.0
       '@aws-crypto/sha256-js': 5.2.0
@@ -2110,7 +2110,7 @@ snapshots:
     transitivePeerDependencies:
       - aws-crt
 
-  '@aws-sdk/client-ecr@3.799.0':
+  '@aws-sdk/client-ecr@3.800.0':
     dependencies:
       '@aws-crypto/sha256-browser': 5.2.0
       '@aws-crypto/sha256-js': 5.2.0
