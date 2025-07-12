@@ -16,6 +16,13 @@ inputs:
   repository-policy:
     required: false
     description: path to repository policy file of the repository (optional)
+  immutable:
+    required: false
+    description: set true to set immutable tags
+    default: 'false'
+  tags:
+    required: false
+    description: metadata that you apply to the repository to help you categorize and organize them
 
 outputs:
   repository-uri:
