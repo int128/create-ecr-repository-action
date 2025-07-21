@@ -26,7 +26,7 @@
     "prettier": "3.6.2",
     "ts-jest": "29.4.0",
     "typescript": "5.8.3",
-    "typescript-eslint": "8.36.0"
+    "typescript-eslint": "8.38.0"
   },
   "packageManager": "pnpm@10.13.1"
 }
