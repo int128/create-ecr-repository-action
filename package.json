@@ -9,7 +9,7 @@
   "type": "module",
   "dependencies": {
     "@actions/core": "1.11.1",
-    "@aws-sdk/client-ecr": "3.848.0",
+    "@aws-sdk/client-ecr": "3.851.0",
     "@aws-sdk/client-ecr-public": "3.848.0"
   },
   "devDependencies": {
