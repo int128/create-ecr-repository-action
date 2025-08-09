@@ -19,8 +19,8 @@ importers:
         version: 3.864.0
     devDependencies:
       '@eslint/js':
-        specifier: 9.32.0
-        version: 9.32.0
+        specifier: 9.33.0
+        version: 9.33.0
       '@tsconfig/node20':
         specifier: 20.1.6
         version: 20.1.6
@@ -390,10 +390,6 @@ packages:
 
   '@eslint/eslintrc@3.3.1':
     resolution: {integrity: sha512-gtF186CXhIl1p4pJNGZw8Yc6RlshoePRvE0X91oPGb3vZ8pM3qOS9W9NGPat9LziaBV7XrJWGylNQXkGcnM3IQ==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
-  '@eslint/js@9.32.0':
-    resolution: {integrity: sha512-BBpRFZK3eX6uMLKz8WxFOBIFFcGFJ/g8XuwjTHCqHROSIsopI+ddn/d5Cfh36+7+e5edVS8dbSHnBNhrLEX0zg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@eslint/js@9.33.0':
@@ -2884,8 +2880,6 @@ snapshots:
       strip-json-comments: 3.1.1
     transitivePeerDependencies:
       - supports-color
-
-  '@eslint/js@9.32.0': {}
 
   '@eslint/js@9.33.0': {}
 
