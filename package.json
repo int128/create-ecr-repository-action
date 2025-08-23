@@ -19,7 +19,7 @@
     "@types/node": "20.19.11",
     "@vercel/ncc": "0.38.3",
     "aws-sdk-client-mock": "4.1.0",
-    "eslint": "9.33.0",
+    "eslint": "9.34.0",
     "eslint-plugin-jest": "29.0.1",
     "jest": "30.0.5",
     "pnpm": "10.15.0",
