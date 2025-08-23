@@ -4,6 +4,8 @@ import { runForECRPublic } from './ecr_public.js'
 type Inputs = {
   public: boolean
   repository: string
+  immutable: boolean | undefined
+  tags: string | undefined
   lifecyclePolicy: string | undefined
   repositoryPolicy: string | undefined
 }
