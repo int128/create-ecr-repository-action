@@ -9,8 +9,8 @@
   "type": "module",
   "dependencies": {
     "@actions/core": "1.11.1",
-    "@aws-sdk/client-ecr": "3.893.0",
-    "@aws-sdk/client-ecr-public": "3.893.0"
+    "@aws-sdk/client-ecr": "3.901.0",
+    "@aws-sdk/client-ecr-public": "3.901.0"
   },
   "devDependencies": {
     "@eslint/js": "9.36.0",
