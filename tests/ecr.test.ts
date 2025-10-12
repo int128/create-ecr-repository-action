@@ -56,6 +56,132 @@ describe('Create an ECR repository if not exist', () => {
   })
 })
 
+describe('Create a mutable ECR repository if not exist', () => {
+  test('returns the existing repository', async () => {
+    ecrMock.on(DescribeRepositoriesCommand, { repositoryNames: ['foobar'] }).resolves({
+      repositories: [
+        {
+          repositoryName: 'foobar',
+          repositoryUri: '123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar',
+        },
+      ],
+    })
+
+    const output = await runForECR({ repository: 'foobar' })
+    expect(output.repositoryUri).toEqual('123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar')
+  })
+
+  test('creates a repository with default immutable flag', async () => {
+    ecrMock
+      .on(DescribeRepositoriesCommand, { repositoryNames: ['foobar'] })
+      .rejects({ name: 'RepositoryNotFoundException' })
+    ecrMock.on(CreateRepositoryCommand, {
+      repositoryName: 'foobar',
+      imageTagMutability: 'MUTABLE'
+    }).resolves({
+      repository: {
+        repositoryName: 'foobar',
+        repositoryUri: '123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar',
+      },
+    })
+
+    const output = await runForECR({ repository: 'foobar' })
+    expect(output.repositoryUri).toEqual('123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar')
+  })
+
+  test('creates a repository with immutable flag set to true', async () => {
+    ecrMock
+      .on(DescribeRepositoriesCommand, { repositoryNames: ['foobar'] })
+      .rejects({ name: 'RepositoryNotFoundException' })
+    ecrMock.on(CreateRepositoryCommand, {
+      repositoryName: 'foobar',
+      imageTagMutability: 'IMMUTABLE'
+    }).resolves({
+      repository: {
+        repositoryName: 'foobar',
+        repositoryUri: '123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar',
+      },
+    })
+
+    const output = await runForECR({ repository: 'foobar', immutable: true })
+    expect(output.repositoryUri).toEqual('123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar')
+  })
+
+  test('general error occurred on describe', async () => {
+    ecrMock.on(DescribeRepositoriesCommand).rejects({ name: 'ConfigError' })
+
+    await expect(runForECR({ repository: 'foobar' })).rejects.toThrow()
+  })
+
+  test('general error occurred on create', async () => {
+    ecrMock
+      .on(DescribeRepositoriesCommand, { repositoryNames: ['foobar'] })
+      .rejects({ name: 'RepositoryNotFoundException' })
+    ecrMock.on(CreateRepositoryCommand, { repositoryName: 'foobar' }).rejects({ name: 'ConfigError' })
+
+    await expect(runForECR({ repository: 'foobar' })).rejects.toThrow()
+  })
+})
+
+describe('Create an ECR repository with tags', () => {
+  test('returns the existing repository', async () => {
+    ecrMock.on(DescribeRepositoriesCommand, { repositoryNames: ['foobar'] }).resolves({
+      repositories: [
+        {
+          repositoryName: 'foobar',
+          repositoryUri: '123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar',
+        },
+      ],
+    })
+
+    const output = await runForECR({ repository: 'foobar' })
+    expect(output.repositoryUri).toEqual('123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar')
+  })
+
+  test('creates a repository with tags', async () => {
+    const testTags = "Environment=Production,Project=MyApp"
+    const expectedTags = [
+      { Key: 'Environment', Value: 'Production' },
+      { Key: 'Project', Value: 'MyApp' }
+    ]
+
+    ecrMock
+      .on(DescribeRepositoriesCommand, { repositoryNames: ['foobar'] })
+      .rejects({ name: 'RepositoryNotFoundException' })
+    ecrMock.on(CreateRepositoryCommand, {
+      repositoryName: 'foobar',
+      imageTagMutability: 'MUTABLE',
+      tags: expectedTags
+    }).resolves({
+      repository: {
+        repositoryName: 'foobar',
+        repositoryUri: '123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar',
+      },
+    })
+
+    const output = await runForECR({
+      repository: 'foobar',
+      tags: testTags
+    })
+    expect(output.repositoryUri).toEqual('123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar')
+  })
+
+  test('general error occurred on describe', async () => {
+    ecrMock.on(DescribeRepositoriesCommand).rejects({ name: 'ConfigError' })
+
+    await expect(runForECR({ repository: 'foobar' })).rejects.toThrow()
+  })
+
+  test('general error occurred on create', async () => {
+    ecrMock
+      .on(DescribeRepositoriesCommand, { repositoryNames: ['foobar'] })
+      .rejects({ name: 'RepositoryNotFoundException' })
+    ecrMock.on(CreateRepositoryCommand, { repositoryName: 'foobar' }).rejects({ name: 'ConfigError' })
+
+    await expect(runForECR({ repository: 'foobar' })).rejects.toThrow()
+  })
+})
+
 describe('Put a lifecycle policy', () => {
   test('success', async () => {
     ecrMock.on(DescribeRepositoriesCommand).resolves({

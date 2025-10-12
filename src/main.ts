@@ -5,6 +5,8 @@ const main = async (): Promise<void> => {
   const outputs = await run({
     public: core.getBooleanInput('public', { required: true }),
     repository: core.getInput('repository', { required: true }),
+    immutable: core.getInput('immutable') === 'true' ? true : undefined,
+    tags: core.getInput('tags') || undefined,
     lifecyclePolicy: core.getInput('lifecycle-policy') || undefined,
     repositoryPolicy: core.getInput('repository-policy') || undefined,
   })
