@@ -1,14 +1,14 @@
+import assert from 'node:assert'
+import { promises as fs } from 'node:fs'
 import * as core from '@actions/core'
 import {
-  ECRClient,
-  DescribeRepositoriesCommand,
   CreateRepositoryCommand,
+  DescribeRepositoriesCommand,
+  ECRClient,
   PutLifecyclePolicyCommand,
+  type Repository,
   SetRepositoryPolicyCommand,
-  Repository,
 } from '@aws-sdk/client-ecr'
-import assert from 'assert'
-import { promises as fs } from 'fs'
 
 type Inputs = {
   repository: string
