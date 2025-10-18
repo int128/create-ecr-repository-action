@@ -6,6 +6,7 @@ import {
   SetRepositoryPolicyCommand,
 } from '@aws-sdk/client-ecr'
 import { mockClient } from 'aws-sdk-client-mock'
+import { describe, expect, test } from 'vitest'
 import { runForECR } from '../src/ecr.js'
 
 const ecrMock = mockClient(ECRClient)
@@ -77,7 +78,7 @@ describe('Put a lifecycle policy', () => {
 
     const output = await runForECR({
       repository: 'foobar',
-      lifecyclePolicy: `${__dirname}/fixtures/lifecycle-policy.json`,
+      lifecyclePolicy: `${import.meta.dirname}/fixtures/lifecycle-policy.json`,
     })
     expect(output.repositoryUri).toBe('123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar')
   })
@@ -117,7 +118,7 @@ describe('Put a repository policy', () => {
 
     const output = await runForECR({
       repository: 'foobar',
-      repositoryPolicy: `${__dirname}/fixtures/repository-policy.json`,
+      repositoryPolicy: `${import.meta.dirname}/fixtures/repository-policy.json`,
     })
     expect(output.repositoryUri).toBe('123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/foobar')
   })
