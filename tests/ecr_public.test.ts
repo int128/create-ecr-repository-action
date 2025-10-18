@@ -1,10 +1,10 @@
-import { mockClient } from 'aws-sdk-client-mock'
 import {
   CreateRepositoryCommand,
   DescribeRepositoriesCommand,
-  SetRepositoryPolicyCommand,
   ECRPUBLICClient,
+  SetRepositoryPolicyCommand,
 } from '@aws-sdk/client-ecr-public'
+import { mockClient } from 'aws-sdk-client-mock'
 import { runForECRPublic } from '../src/ecr_public.js'
 
 const ecrMock = mockClient(ECRPUBLICClient)

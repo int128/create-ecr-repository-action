@@ -1,4 +1,3 @@
-import { mockClient } from 'aws-sdk-client-mock'
 import {
   CreateRepositoryCommand,
   DescribeRepositoriesCommand,
@@ -6,6 +5,7 @@ import {
   PutLifecyclePolicyCommand,
   SetRepositoryPolicyCommand,
 } from '@aws-sdk/client-ecr'
+import { mockClient } from 'aws-sdk-client-mock'
 import { runForECR } from '../src/ecr.js'
 
 const ecrMock = mockClient(ECRClient)

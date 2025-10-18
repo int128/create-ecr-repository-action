@@ -1,6 +1,6 @@
-import { mockClient } from 'aws-sdk-client-mock'
 import * as ecr from '@aws-sdk/client-ecr'
 import * as ecrPublic from '@aws-sdk/client-ecr-public'
+import { mockClient } from 'aws-sdk-client-mock'
 import { run } from '../src/run.js'
 
 const mocks = {
