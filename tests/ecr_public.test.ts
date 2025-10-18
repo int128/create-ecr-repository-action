@@ -5,6 +5,7 @@ import {
   SetRepositoryPolicyCommand,
 } from '@aws-sdk/client-ecr-public'
 import { mockClient } from 'aws-sdk-client-mock'
+import { describe, expect, test } from 'vitest'
 import { runForECRPublic } from '../src/ecr_public.js'
 
 const ecrMock = mockClient(ECRPUBLICClient)
@@ -44,7 +45,7 @@ describe('Create an ECR repository if not exist', () => {
       .on(DescribeRepositoriesCommand, { repositoryNames: ['foobar'] })
       .rejects({ name: 'ConfigError', message: 'ConfigError' })
 
-    await expect(runForECRPublic({ repository: 'foobar' })).rejects.toThrow({
+    await expect(runForECRPublic({ repository: 'foobar' })).rejects.toMatchObject({
       name: 'ConfigError',
       message: 'ConfigError',
     })
@@ -58,7 +59,7 @@ describe('Create an ECR repository if not exist', () => {
       .on(CreateRepositoryCommand, { repositoryName: 'foobar' })
       .rejects({ name: 'ConfigError', message: 'ConfigError' })
 
-    await expect(runForECRPublic({ repository: 'foobar' })).rejects.toThrow({
+    await expect(runForECRPublic({ repository: 'foobar' })).rejects.toMatchObject({
       name: 'ConfigError',
       message: 'ConfigError',
     })
@@ -86,7 +87,7 @@ describe('Put a repository policy', () => {
 
     const output = await runForECRPublic({
       repository: 'foobar',
-      repositoryPolicy: `${__dirname}/fixtures/repository-policy.json`,
+      repositoryPolicy: `${import.meta.dirname}/fixtures/repository-policy.json`,
     })
     expect(output.repositoryUri).toBe('public.ecr.aws/12345678/foobar')
   })
