@@ -95,5 +95,5 @@ typings/
 Thumbs.db
 
 # Ignore built ts files
-dist/
-lib/
+/dist
+/lib
