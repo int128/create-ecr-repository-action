@@ -7,8 +7,8 @@
   "type": "module",
   "dependencies": {
     "@actions/core": "1.11.1",
-    "@aws-sdk/client-ecr": "3.938.0",
-    "@aws-sdk/client-ecr-public": "3.936.0"
+    "@aws-sdk/client-ecr": "3.940.0",
+    "@aws-sdk/client-ecr-public": "3.940.0"
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.7",
