@@ -12,11 +12,11 @@ importers:
         specifier: 2.0.3
         version: 2.0.3
       '@aws-sdk/client-ecr':
-        specifier: 3.975.0
-        version: 3.975.0
+        specifier: 3.980.0
+        version: 3.980.0
       '@aws-sdk/client-ecr-public':
-        specifier: 3.975.0
-        version: 3.975.0
+        specifier: 3.980.0
+        version: 3.980.0
     devDependencies:
       '@biomejs/biome':
         specifier: 2.3.13
@@ -70,12 +70,12 @@ packages:
   '@aws-crypto/util@5.2.0':
     resolution: {integrity: sha512-4RkU9EsI6ZpBve5fseQlGNUWKMa1RLPQ1dnjnQoe07ldfIzcsGb5hC5W0Dm7u423KWzawlrpbjXBrXCEv9zazQ==}
 
-  '@aws-sdk/client-ecr-public@3.975.0':
-    resolution: {integrity: sha512-v9xhc977hYR3SFJevK5ZpkGJMJkXtnLfsp6Tt+Q3S5VAE4JWeLDp3q9jNCxQqvHzVctlVhd6m8AaQEijneYTXw==}
+  '@aws-sdk/client-ecr-public@3.980.0':
+    resolution: {integrity: sha512-XHi03C7i34pG3Wcob8tlS72f/Dod120adZWS4g/qBmOVd0XA7i+o/MHwOyE4mBzCXszKE6bZOuQSpkMeO0byRQ==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/client-ecr@3.975.0':
-    resolution: {integrity: sha512-ZEc4HUXuTtzm7JifloMc9AA/bcjijUPAmKW70QDBXB/4HCyXKIzEotV8h6t0yrzsVfzgzJeRnFh9sWYpWFJQ/g==}
+  '@aws-sdk/client-ecr@3.980.0':
+    resolution: {integrity: sha512-mA5gEw6HMA+JiO5Kgr8bJPUxrVttmh6jvM7l/hOcThd8wmwAB3NFBRYEJVtRiS++q6ow2HQ0HUvOmhQkUhwMNw==}
     engines: {node: '>=20.0.0'}
 
   '@aws-sdk/client-sso@3.980.0':
@@ -146,16 +146,8 @@ packages:
     resolution: {integrity: sha512-1nFileg1wAgDmieRoj9dOawgr2hhlh7xdvcH57b1NnqfPaVlcqVJyPc6k3TLDUFPY69eEwNxdGue/0wIz58vjA==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/types@3.972.0':
-    resolution: {integrity: sha512-U7xBIbLSetONxb2bNzHyDgND3oKGoIfmknrEVnoEU4GUSs+0augUOIn9DIWGUO2ETcRFdsRUnmx9KhPT9Ojbug==}
-    engines: {node: '>=20.0.0'}
-
   '@aws-sdk/types@3.973.1':
     resolution: {integrity: sha512-DwHBiMNOB468JiX6+i34c+THsKHErYUdNQ3HexeXZvVn4zouLjgaS4FejiGSi2HyBuzuyHg7SuOPmjSvoU9NRg==}
-    engines: {node: '>=20.0.0'}
-
-  '@aws-sdk/util-endpoints@3.972.0':
-    resolution: {integrity: sha512-6JHsl1V/a1ZW8D8AFfd4R52fwZPnZ5H4U6DS8m/bWT8qad72NvbOFAC7U2cDtFs2TShqUO3TEiX/EJibtY3ijg==}
     engines: {node: '>=20.0.0'}
 
   '@aws-sdk/util-endpoints@3.980.0':
@@ -1058,7 +1050,7 @@ snapshots:
       '@smithy/util-utf8': 2.3.0
       tslib: 2.6.2
 
-  '@aws-sdk/client-ecr-public@3.975.0':
+  '@aws-sdk/client-ecr-public@3.980.0':
     dependencies:
       '@aws-crypto/sha256-browser': 5.2.0
       '@aws-crypto/sha256-js': 5.2.0
@@ -1070,7 +1062,7 @@ snapshots:
       '@aws-sdk/middleware-user-agent': 3.972.5
       '@aws-sdk/region-config-resolver': 3.972.3
       '@aws-sdk/types': 3.973.1
-      '@aws-sdk/util-endpoints': 3.972.0
+      '@aws-sdk/util-endpoints': 3.980.0
       '@aws-sdk/util-user-agent-browser': 3.972.3
       '@aws-sdk/util-user-agent-node': 3.972.3
       '@smithy/config-resolver': 4.4.6
@@ -1102,7 +1094,7 @@ snapshots:
     transitivePeerDependencies:
       - aws-crt
 
-  '@aws-sdk/client-ecr@3.975.0':
+  '@aws-sdk/client-ecr@3.980.0':
     dependencies:
       '@aws-crypto/sha256-browser': 5.2.0
       '@aws-crypto/sha256-js': 5.2.0
@@ -1114,7 +1106,7 @@ snapshots:
       '@aws-sdk/middleware-user-agent': 3.972.5
       '@aws-sdk/region-config-resolver': 3.972.3
       '@aws-sdk/types': 3.973.1
-      '@aws-sdk/util-endpoints': 3.972.0
+      '@aws-sdk/util-endpoints': 3.980.0
       '@aws-sdk/util-user-agent-browser': 3.972.3
       '@aws-sdk/util-user-agent-node': 3.972.3
       '@smithy/config-resolver': 4.4.6
@@ -1404,22 +1396,9 @@ snapshots:
     transitivePeerDependencies:
       - aws-crt
 
-  '@aws-sdk/types@3.972.0':
-    dependencies:
-      '@smithy/types': 4.12.0
-      tslib: 2.6.2
-
   '@aws-sdk/types@3.973.1':
     dependencies:
       '@smithy/types': 4.12.0
-      tslib: 2.6.2
-
-  '@aws-sdk/util-endpoints@3.972.0':
-    dependencies:
-      '@aws-sdk/types': 3.972.0
-      '@smithy/types': 4.12.0
-      '@smithy/url-parser': 4.2.8
-      '@smithy/util-endpoints': 3.2.8
       tslib: 2.6.2
 
   '@aws-sdk/util-endpoints@3.980.0':
