@@ -7,7 +7,7 @@
   },
   "type": "module",
   "dependencies": {
-    "@actions/core": "2.0.3",
+    "@actions/core": "3.0.0",
     "@aws-sdk/client-ecr": "3.985.0",
     "@aws-sdk/client-ecr-public": "3.985.0"
   },
