@@ -12,11 +12,11 @@ importers:
         specifier: 3.0.1
         version: 3.0.1
       '@aws-sdk/client-ecr':
-        specifier: 3.1032.0
-        version: 3.1032.0
+        specifier: 3.1037.0
+        version: 3.1037.0
       '@aws-sdk/client-ecr-public':
-        specifier: 3.1032.0
-        version: 3.1032.0
+        specifier: 3.1037.0
+        version: 3.1037.0
     devDependencies:
       '@biomejs/biome':
         specifier: 2.4.13
@@ -70,12 +70,12 @@ packages:
   '@aws-crypto/util@5.2.0':
     resolution: {integrity: sha512-4RkU9EsI6ZpBve5fseQlGNUWKMa1RLPQ1dnjnQoe07ldfIzcsGb5hC5W0Dm7u423KWzawlrpbjXBrXCEv9zazQ==}
 
-  '@aws-sdk/client-ecr-public@3.1032.0':
-    resolution: {integrity: sha512-fI/lYZtorWhlV5289tLrz74ggfUshfWRNImi4o76sw4k8IGvc4FAl40Q6jZaQmSM+Y+sjdDHgRIXOlEnpyQRTQ==}
+  '@aws-sdk/client-ecr-public@3.1037.0':
+    resolution: {integrity: sha512-9B357moTg8xeOnZ3eIJAaL9jo44ze/npE32cUhfGqK7mIfMO0rDd/jiWtvIz2kfSG4vh11Hd+g0yxtOvQw04fQ==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/client-ecr@3.1032.0':
-    resolution: {integrity: sha512-7Eopt97ouKYFKPeId7v5ZDplq2avLqOz01kslgEimasZQWRVzs6VKd1U9sQMzEkYMfbDM7HRBI7XDN6TJEBirg==}
+  '@aws-sdk/client-ecr@3.1037.0':
+    resolution: {integrity: sha512-8k6DV1NTen7Vd3flkVvGIEQzV70rAvZrZaPsW2RWEgOyOCJVcR64evAtOLCTbLlbFMGgw8lEOR3Qz128jSKB4w==}
     engines: {node: '>=20.0.0'}
 
   '@aws-sdk/core@3.974.5':
@@ -989,7 +989,7 @@ snapshots:
       '@smithy/util-utf8': 2.3.0
       tslib: 2.8.1
 
-  '@aws-sdk/client-ecr-public@3.1032.0':
+  '@aws-sdk/client-ecr-public@3.1037.0':
     dependencies:
       '@aws-crypto/sha256-browser': 5.2.0
       '@aws-crypto/sha256-js': 5.2.0
@@ -1033,7 +1033,7 @@ snapshots:
     transitivePeerDependencies:
       - aws-crt
 
-  '@aws-sdk/client-ecr@3.1032.0':
+  '@aws-sdk/client-ecr@3.1037.0':
     dependencies:
       '@aws-crypto/sha256-browser': 5.2.0
       '@aws-crypto/sha256-js': 5.2.0
