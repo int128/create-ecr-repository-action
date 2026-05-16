@@ -12,7 +12,7 @@
     "@aws-sdk/client-ecr-public": "3.1045.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.14",
+    "@biomejs/biome": "2.4.15",
     "@tsconfig/node24": "24.0.4",
     "@types/node": "24.12.3",
     "@vercel/ncc": "0.38.4",
