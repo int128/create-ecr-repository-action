@@ -12,11 +12,11 @@ importers:
         specifier: 3.0.1
         version: 3.0.1
       '@aws-sdk/client-ecr':
-        specifier: 3.1079.0
-        version: 3.1079.0
+        specifier: 3.1084.0
+        version: 3.1084.0
       '@aws-sdk/client-ecr-public':
-        specifier: 3.1079.0
-        version: 3.1079.0
+        specifier: 3.1084.0
+        version: 3.1084.0
     devDependencies:
       '@biomejs/biome':
         specifier: 2.5.2
@@ -57,12 +57,12 @@ packages:
   '@actions/io@3.0.2':
     resolution: {integrity: sha512-nRBchcMM+QK1pdjO7/idu86rbJI5YHUKCvKs0KxnSYbVe3F51UfGxuZX4Qy/fWlp6l7gWFwIkrOzN+oUK03kfw==}
 
-  '@aws-sdk/client-ecr-public@3.1079.0':
-    resolution: {integrity: sha512-rXyN5aoW2W4GCqVEkp2HHdivBXBRX+76ch+oQuP13sEJu2UJVXFn1qRHQ4jg8fwN/s4NzeBY6POiEwTbYgxxdQ==}
+  '@aws-sdk/client-ecr-public@3.1084.0':
+    resolution: {integrity: sha512-RBwabylWFGAQ4d8BCLDK5rppCw8G8TTRRtdR4IaNJkxCHZfvGiAiq1Ec+SSGO6BwfEk/9Zdyk/bvE0d96Fj1Ug==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/client-ecr@3.1079.0':
-    resolution: {integrity: sha512-z49jwijHWvKpoXToHDQecq5mGAowYQIFgHaw67AqKaouooFxxcYlBtBmIcJZJ8W9oK+Q46B/puMKdncoAwxGlQ==}
+  '@aws-sdk/client-ecr@3.1084.0':
+    resolution: {integrity: sha512-jWX7P4rbU1W8gHn9NJakEvAvuWURetpFRDDWz3MwvAQJY3Bjf7YykAAi1IQa8c2wRemRxHUVILSGFPx/0jCgDA==}
     engines: {node: '>=20.0.0'}
 
   '@aws-sdk/core@3.975.1':
@@ -738,7 +738,7 @@ snapshots:
 
   '@actions/io@3.0.2': {}
 
-  '@aws-sdk/client-ecr-public@3.1079.0':
+  '@aws-sdk/client-ecr-public@3.1084.0':
     dependencies:
       '@aws-sdk/core': 3.975.1
       '@aws-sdk/credential-provider-node': 3.972.66
@@ -749,7 +749,7 @@ snapshots:
       '@smithy/types': 4.16.0
       tslib: 2.8.1
 
-  '@aws-sdk/client-ecr@3.1079.0':
+  '@aws-sdk/client-ecr@3.1084.0':
     dependencies:
       '@aws-sdk/core': 3.975.1
       '@aws-sdk/credential-provider-node': 3.972.66
