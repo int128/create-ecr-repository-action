@@ -113,11 +113,11 @@ importers:
         specifier: 3.0.1
         version: 3.0.1
       '@aws-sdk/client-ecr':
-        specifier: 3.1127.0
-        version: 3.1127.0
+        specifier: 3.1131.0
+        version: 3.1131.0
       '@aws-sdk/client-ecr-public':
-        specifier: 3.1127.0
-        version: 3.1127.0
+        specifier: 3.1131.0
+        version: 3.1131.0
     devDependencies:
       '@biomejs/biome':
         specifier: 2.5.13
@@ -158,16 +158,12 @@ packages:
   '@actions/io@3.0.2':
     resolution: {integrity: sha512-nRBchcMM+QK1pdjO7/idu86rbJI5YHUKCvKs0KxnSYbVe3F51UfGxuZX4Qy/fWlp6l7gWFwIkrOzN+oUK03kfw==}
 
-  '@aws-sdk/client-ecr-public@3.1127.0':
-    resolution: {integrity: sha512-8b9D1Zc6ohSyZ56gJUZWkC2RYYPXLd1pwkHYIMVSQ6tLdDlsFQI3IHF8G03wML7PgJ0hoiOZZKWP24j6dya1rA==}
+  '@aws-sdk/client-ecr-public@3.1131.0':
+    resolution: {integrity: sha512-o38P9h5G5QFaRUovyavy2kjLkhPl5y8Zp+gYwTpma+TBVQ2eDWNX9qDPl19BF/U+EGFcNkBNzkORaKhQdrOOSg==}
     engines: {node: '>=20.0.0'}
 
-  '@aws-sdk/client-ecr@3.1127.0':
-    resolution: {integrity: sha512-37DvZh4jLVbotCdJnR30lzA/1t4NmXOrfLjECbN8ZmDxNulYwClhs59EmDw9QRqbBdHleasZUzup+5yJnHNNxQ==}
-    engines: {node: '>=20.0.0'}
-
-  '@aws-sdk/core@3.977.9':
-    resolution: {integrity: sha512-reqPFEQrZxDZpeGj4PFMepBeR5LGYHRqq/L0motTzgFkCRBA4rFdaVXDSLYyGHhxVz7sT2PDnPN9CluGSfgyJA==}
+  '@aws-sdk/client-ecr@3.1131.0':
+    resolution: {integrity: sha512-CEwZLenbKxl9+3/REZbmHKxxMDj6ocfYIL87uqXSMWPItTDfLdRNkNE52tPs3cHN3b1QXbW1BHo7nMuha7bHuw==}
     engines: {node: '>=20.0.0'}
 
   '@aws-sdk/core@3.978.0':
@@ -874,9 +870,9 @@ snapshots:
 
   '@actions/io@3.0.2': {}
 
-  '@aws-sdk/client-ecr-public@3.1127.0':
+  '@aws-sdk/client-ecr-public@3.1131.0':
     dependencies:
-      '@aws-sdk/core': 3.977.9
+      '@aws-sdk/core': 3.978.0
       '@aws-sdk/credential-provider-node': 3.972.83
       '@aws-sdk/types': 3.974.5
       '@smithy/core': 3.33.3
@@ -885,26 +881,15 @@ snapshots:
       '@smithy/types': 4.17.2
       tslib: 2.8.1
 
-  '@aws-sdk/client-ecr@3.1127.0':
+  '@aws-sdk/client-ecr@3.1131.0':
     dependencies:
-      '@aws-sdk/core': 3.977.9
+      '@aws-sdk/core': 3.978.0
       '@aws-sdk/credential-provider-node': 3.972.83
       '@aws-sdk/types': 3.974.5
       '@smithy/core': 3.33.3
       '@smithy/fetch-http-handler': 5.7.2
       '@smithy/node-http-handler': 4.11.3
       '@smithy/types': 4.17.2
-      tslib: 2.8.1
-
-  '@aws-sdk/core@3.977.9':
-    dependencies:
-      '@aws-sdk/types': 3.974.5
-      '@aws-sdk/xml-builder': 3.972.40
-      '@aws/lambda-invoke-store': 0.3.0
-      '@smithy/core': 3.33.3
-      '@smithy/signature-v4': 5.6.12
-      '@smithy/types': 4.17.2
-      bowser: 2.14.1
       tslib: 2.8.1
 
   '@aws-sdk/core@3.978.0':
