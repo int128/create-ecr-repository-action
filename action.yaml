@@ -6,7 +6,7 @@ inputs:
   public:
     required: true
     description: set true to create into ECR Public registry
-    default: 'false'
+    default: "false"
   repository:
     required: true
     description: repository name to create
@@ -22,5 +22,5 @@ outputs:
     description: URI of the repository, i.e. ACCOUNT.dkr.ecr.REGION.amazonaws.com/NAME
 
 runs:
-  using: 'node24'
-  main: 'dist/index.js'
+  using: "node24"
+  main: "dist/index.js"
