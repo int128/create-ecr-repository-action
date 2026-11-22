@@ -3,7 +3,6 @@
 This is a GitHub Action to create a repository into Amazon ECR or ECR Public registry if it does not exist.
 It can put a lifecycle policy to the repository for cost saving.
 
-
 ## Getting Started
 
 To create a repository:
@@ -19,35 +18,32 @@ jobs:
 
 If the repository exists, this action does nothing.
 
-
 ### Put a lifecycle policy
 
 To create a repository with a lifecycle policy:
 
 ```yaml
-      - uses: int128/create-ecr-repository-action@v1
-        with:
-          repository: hello-world
-          lifecycle-policy: config/lifecycle-policy.json
+- uses: int128/create-ecr-repository-action@v1
+  with:
+    repository: hello-world
+    lifecycle-policy: config/lifecycle-policy.json
 ```
 
 If the repository exists, this action just puts the lifecycle policy.
-
 
 ### Create into ECR Public
 
 To create a repository into ECR Public registry:
 
 ```yaml
-      - uses: int128/create-ecr-repository-action@v1
-        with:
-          repository: hello-world
-          public: true
+- uses: int128/create-ecr-repository-action@v1
+  with:
+    repository: hello-world
+    public: true
 ```
 
 If the repository exists, this action does nothing.
 Note that currently ECR Public does not support the lifecycle polocy.
-
 
 ### Full example
 
@@ -80,18 +76,17 @@ jobs:
           labels: ${{ steps.metadata.outputs.labels }}
 ```
 
-
 ## Inputs
 
-| Name | Default | Description
-|------|---------|------------
-| `public` | `false` | Set `true` to create into ECR Public registry
-| `repository` | (required) | Repository name to create
-| `lifecycle-policy` | - | Path to a file of lifecycle policy for the repository
-| `repository-policy` | - |  Path to a file of repository policy for the repository
+| Name                | Default    | Description                                            |
+| ------------------- | ---------- | ------------------------------------------------------ |
+| `public`            | `false`    | Set `true` to create into ECR Public registry          |
+| `repository`        | (required) | Repository name to create                              |
+| `lifecycle-policy`  | -          | Path to a file of lifecycle policy for the repository  |
+| `repository-policy` | -          | Path to a file of repository policy for the repository |
 
 ## Outputs
 
-| Name | Description
-|------|------------
-| `repository-uri` | URI of the repository (in form of `ACCOUNT.dkr.ecr.REGION.amazonaws.com/NAME` or `public.ecr.aws/ID/NAME`)
+| Name             | Description                                                                                                |
+| ---------------- | ---------------------------------------------------------------------------------------------------------- |
+| `repository-uri` | URI of the repository (in form of `ACCOUNT.dkr.ecr.REGION.amazonaws.com/NAME` or `public.ecr.aws/ID/NAME`) |
